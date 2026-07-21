@@ -1,0 +1,6 @@
+*.dat
+*.jks
+V2rayNG/app/release/output.json
+.idea/
+.gradle/
+*.so
