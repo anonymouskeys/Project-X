@@ -33,38 +33,27 @@ import java.util.concurrent.atomic.AtomicLong
 
 class V2RayTestService : Service() {
     companion object {
-        // Anti-DPI tests deliberately stay conservative: every test creates a
-        // temporary Xray core and shares one stateful ciadpi auto-strategy.
-        private const val MAX_PARALLEL_DPI_TESTS = 2
-
-        // Without Anti-DPI there is no shared ciadpi bottleneck. Restore a fast
-        // queue, but cap it to avoid the old unbounded one-core-per-CPU storm on
-        // high-core devices.
-        private val MAX_PARALLEL_DIRECT_TESTS = Runtime.getRuntime()
+        // Restore the old fast queue for both modes, with a safety cap for
+        // high-core devices. Lifecycle ownership, not parallelism, was
+        // terminating active DPI handshakes.
+        private val MAX_PARALLEL_TESTS = Runtime.getRuntime()
             .availableProcessors()
             .coerceIn(2, 8)
 
         private const val DPI_IDLE_STOP_DELAY_MS = 1500L
     }
 
-    private val directExecutor = Executors.newFixedThreadPool(MAX_PARALLEL_DIRECT_TESTS)
-    private val directDispatcher = directExecutor.asCoroutineDispatcher()
-    private val directTestScope = CoroutineScope(SupervisorJob() + directDispatcher)
+    private val testExecutor = Executors.newFixedThreadPool(MAX_PARALLEL_TESTS)
+    private val testDispatcher = testExecutor.asCoroutineDispatcher()
+    private val testScope = CoroutineScope(SupervisorJob() + testDispatcher)
 
-    private val dpiExecutor = Executors.newFixedThreadPool(MAX_PARALLEL_DPI_TESTS)
-    private val dpiDispatcher = dpiExecutor.asCoroutineDispatcher()
-    private val dpiTestScope = CoroutineScope(SupervisorJob() + dpiDispatcher)
-
-    // Cleanup must not occupy one of the two DPI test slots while sleeping.
+    // Cleanup must not occupy a test worker while waiting for another request.
     private val maintenanceExecutor = Executors.newSingleThreadExecutor()
     private val maintenanceDispatcher = maintenanceExecutor.asCoroutineDispatcher()
     private val maintenanceScope = CoroutineScope(SupervisorJob() + maintenanceDispatcher)
 
-    private val pendingTests = AtomicInteger(0)
+    private val pendingDpiTests = AtomicInteger(0)
     private val cleanupGeneration = AtomicLong(0)
-
-    @Volatile
-    private var dpiStartedByTestService = false
 
     override fun onCreate() {
         super.onCreate()
@@ -77,19 +66,18 @@ class V2RayTestService : Service() {
             MSG_MEASURE_CONFIG -> {
                 val guid = intent.serializable<String>("content") ?: ""
 
-                // Snapshot the mode when the request enters the queue. A later
-                // settings toggle must not move an already queued test between
-                // the fast and DPI paths halfway through configuration creation.
+                // Snapshot the setting when the request enters the queue.
                 val dpiEnabled = MmkvManager.decodeSettingsBool(
                     AppConfig.PREF_DPI_ENABLED,
                     false
                 )
-                val scope = if (dpiEnabled) dpiTestScope else directTestScope
 
-                cleanupGeneration.incrementAndGet()
-                pendingTests.incrementAndGet()
+                if (dpiEnabled) {
+                    cleanupGeneration.incrementAndGet()
+                    pendingDpiTests.incrementAndGet()
+                }
 
-                scope.launch {
+                testScope.launch {
                     try {
                         val result = startRealPing(guid, dpiEnabled)
                         MessageUtil.sendMsg2UI(
@@ -98,7 +86,7 @@ class V2RayTestService : Service() {
                             Pair(guid, result)
                         )
                     } finally {
-                        if (pendingTests.decrementAndGet() == 0) {
+                        if (dpiEnabled && pendingDpiTests.decrementAndGet() == 0) {
                             scheduleDpiCleanup()
                         }
                     }
@@ -107,9 +95,8 @@ class V2RayTestService : Service() {
 
             MSG_MEASURE_CONFIG_CANCEL -> {
                 cleanupGeneration.incrementAndGet()
-                directTestScope.coroutineContext[Job]?.cancelChildren()
-                dpiTestScope.coroutineContext[Job]?.cancelChildren()
-                if (pendingTests.get() == 0) scheduleDpiCleanup()
+                testScope.coroutineContext[Job]?.cancelChildren()
+                if (pendingDpiTests.get() == 0) scheduleDpiCleanup()
             }
         }
         return START_NOT_STICKY
@@ -120,19 +107,16 @@ class V2RayTestService : Service() {
     override fun onDestroy() {
         cleanupGeneration.incrementAndGet()
 
-        directTestScope.cancel()
-        dpiTestScope.cancel()
+        testScope.cancel()
         maintenanceScope.cancel()
 
-        directDispatcher.close()
-        dpiDispatcher.close()
+        testDispatcher.close()
         maintenanceDispatcher.close()
 
-        directExecutor.shutdownNow()
-        dpiExecutor.shutdownNow()
+        testExecutor.shutdownNow()
         maintenanceExecutor.shutdownNow()
 
-        stopTestOwnedDpiIfSafe()
+        ByeDpiManager.release(ByeDpiManager.Owner.TEST_SERVICE)
         super.onDestroy()
     }
 
@@ -142,17 +126,13 @@ class V2RayTestService : Service() {
             return PluginUtil.realPingHy2(this, configItem)
         }
 
-        if (dpiEnabled) {
-            val wasRunning = ByeDpiManager.isRunning()
-            if (!ByeDpiManager.start(this)) {
-                Log.w(AppConfig.ANG_PACKAGE, "Delay test: ByeDPI failed to start for $guid")
-                return -1L
-            }
-            if (!wasRunning) dpiStartedByTestService = true
+        if (dpiEnabled && !ByeDpiManager.acquire(this, ByeDpiManager.Owner.TEST_SERVICE)) {
+            Log.w(AppConfig.ANG_PACKAGE, "Delay test: ByeDPI failed to start for $guid")
+            return -1L
         }
 
-        // Generate only after ciadpi is listening, because V2rayConfigManager
-        // adds the local SOCKS outbound based on ByeDpiManager.isRunning().
+        // Generate only after TEST_SERVICE owns a live ciadpi process, because
+        // V2rayConfigManager inserts its SOCKS outbound only while it is running.
         val generated = V2rayConfigManager.getV2rayConfig(this, guid)
         if (!generated.status) return -1L
 
@@ -167,22 +147,9 @@ class V2RayTestService : Service() {
         val generation = cleanupGeneration.incrementAndGet()
         maintenanceScope.launch {
             delay(DPI_IDLE_STOP_DELAY_MS)
-            if (cleanupGeneration.get() == generation && pendingTests.get() == 0) {
-                stopTestOwnedDpiIfSafe()
+            if (cleanupGeneration.get() == generation && pendingDpiTests.get() == 0) {
+                ByeDpiManager.release(ByeDpiManager.Owner.TEST_SERVICE)
             }
         }
-    }
-
-    private fun stopTestOwnedDpiIfSafe() {
-        if (!dpiStartedByTestService) return
-
-        // If VPN became active during testing, it now owns the shared process.
-        if (V2RayServiceManager.v2rayPoint.isRunning) {
-            dpiStartedByTestService = false
-            return
-        }
-
-        ByeDpiManager.stop()
-        dpiStartedByTestService = false
     }
 }

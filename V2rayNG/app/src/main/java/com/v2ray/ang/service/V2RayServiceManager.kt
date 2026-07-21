@@ -162,12 +162,12 @@ object V2RayServiceManager {
             return
         }
         val dpiRequested = MmkvManager.decodeSettingsBool(AppConfig.PREF_DPI_ENABLED, false)
-        if (dpiRequested && !ByeDpiManager.start(service)) {
+        if (dpiRequested && !ByeDpiManager.acquire(service, ByeDpiManager.Owner.VPN_SERVICE)) {
             Log.w(ANG_PACKAGE, "ByeDPI unavailable; falling back to normal Xray path")
         }
         val result = V2rayConfigManager.getV2rayConfig(service, guid)
         if (!result.status) {
-            ByeDpiManager.stop()
+            ByeDpiManager.release(ByeDpiManager.Owner.VPN_SERVICE)
             return
         }
 
@@ -197,7 +197,7 @@ object V2RayServiceManager {
 
             PluginUtil.runPlugin(service, config, result.domainPort)
         } else {
-            ByeDpiManager.stop()
+            ByeDpiManager.release(ByeDpiManager.Owner.VPN_SERVICE)
             MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_START_FAILURE, "")
             cancelNotification()
         }
@@ -224,7 +224,7 @@ object V2RayServiceManager {
         } catch (e: Exception) {
             Log.d(ANG_PACKAGE, e.toString())
         }
-        ByeDpiManager.stop()
+        ByeDpiManager.release(ByeDpiManager.Owner.VPN_SERVICE)
         PluginUtil.stopPlugin()
     }
 

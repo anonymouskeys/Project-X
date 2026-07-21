@@ -9,6 +9,7 @@ import java.io.IOException
 import java.io.InterruptedIOException
 import java.net.InetSocketAddress
 import java.net.Socket
+import java.util.EnumSet
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicLong
 
@@ -39,6 +40,7 @@ data class ByeDpiSettings(
 
 object ByeDpiManager {
     enum class State { STOPPED, STARTING, RUNNING, FAILED }
+    enum class Owner { VPN_SERVICE, TEST_SERVICE }
 
     @Volatile var state: State = State.STOPPED
         private set
@@ -50,17 +52,23 @@ object ByeDpiManager {
 
     /** Invalidates callbacks belonging to an older process instance. */
     private val generation = AtomicLong(0)
+    private val owners = EnumSet.noneOf(Owner::class.java)
 
     fun isRunning(): Boolean = state == State.RUNNING && process?.isAlive == true
 
     @Synchronized
-    fun start(context: Context): Boolean {
+    fun acquire(context: Context, owner: Owner): Boolean {
         val settings = ByeDpiSettings.load()
         if (!settings.enabled) {
-            stop()
+            Log.i(AppConfig.ANG_PACKAGE, "ByeDPI acquire ignored: disabled owner=$owner")
             return false
         }
-        if (isRunning()) return true
+
+        if (isRunning()) {
+            owners.add(owner)
+            logOwners("acquire", owner)
+            return true
+        }
 
         stopLocked()
         stopping = false
@@ -109,7 +117,9 @@ object ByeDpiManager {
             val ready = waitForPort(created, myGeneration, 2500)
             if (ready && process === created && created.isAlive) {
                 state = State.RUNNING
+                owners.add(owner)
                 Log.i(AppConfig.ANG_PACKAGE, "ByeDPI started on ${AppConfig.LOOPBACK}:${AppConfig.PORT_BYEDPI}")
+                logOwners("acquire", owner)
                 true
             } else {
                 if (process === created) state = State.FAILED
@@ -178,11 +188,36 @@ object ByeDpiManager {
     }
 
     @Synchronized
-    fun stop() {
-        stopLocked()
+    fun release(owner: Owner) {
+        val removed = owners.remove(owner)
+        if (!removed) {
+            logOwners("release-missing", owner)
+            return
+        }
+
+        logOwners("release", owner)
+        if (owners.isEmpty()) {
+            stopLocked()
+        }
     }
 
-    /** Caller must hold this object's monitor. */
+    @Synchronized
+    fun hasOwner(owner: Owner): Boolean = owners.contains(owner)
+
+    /** Compatibility wrapper for older callers. */
+    fun start(context: Context): Boolean = acquire(context, Owner.VPN_SERVICE)
+
+    /** Compatibility wrapper for older callers. */
+    fun stop() = release(Owner.VPN_SERVICE)
+
+    private fun logOwners(action: String, owner: Owner) {
+        Log.i(
+            AppConfig.ANG_PACKAGE,
+            "ByeDPI $action owner=$owner owners=${owners.joinToString(prefix = "[", postfix = "]")}"
+        )
+    }
+
+    /** Caller must hold this object's monitor. Owners are managed by acquire/release. */
     private fun stopLocked() {
         stopping = true
         generation.incrementAndGet()
