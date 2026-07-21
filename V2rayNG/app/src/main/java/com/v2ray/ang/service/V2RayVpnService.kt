@@ -104,8 +104,10 @@ class V2RayVpnService : VpnService(), ServiceControl {
 //    }
 
     override fun onDestroy() {
-        super.onDestroy()
+        isRunning = false
+        V2RayServiceManager.clearServiceControl(this)
         V2RayServiceManager.cancelNotification()
+        super.onDestroy()
     }
 
     private fun setup() {
@@ -336,7 +338,14 @@ class V2RayVpnService : VpnService(), ServiceControl {
         stopV2Ray(true)
     }
 
+    override fun isVpnActive(): Boolean {
+        return isRunning &&
+            ::mInterface.isInitialized &&
+            mInterface.fileDescriptor.valid()
+    }
+
     override fun vpnProtect(socket: Int): Boolean {
+        if (!isVpnActive()) return true
         return protect(socket)
     }
 

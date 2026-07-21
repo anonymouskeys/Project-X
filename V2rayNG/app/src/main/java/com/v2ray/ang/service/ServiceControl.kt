@@ -9,5 +9,8 @@ interface ServiceControl {
 
     fun stopService()
 
+    /** True only while an established Android VPN interface is accepting traffic. */
+    fun isVpnActive(): Boolean
+
     fun vpnProtect(socket: Int): Boolean
 }

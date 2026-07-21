@@ -22,8 +22,9 @@ class V2RayProxyOnlyService : Service(), ServiceControl {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
+        V2RayServiceManager.clearServiceControl(this)
         V2RayServiceManager.stopV2rayPoint()
+        super.onDestroy()
     }
 
     override fun getService(): Service {
@@ -36,6 +37,10 @@ class V2RayProxyOnlyService : Service(), ServiceControl {
 
     override fun stopService() {
         stopSelf()
+    }
+
+    override fun isVpnActive(): Boolean {
+        return false
     }
 
     override fun vpnProtect(socket: Int): Boolean {

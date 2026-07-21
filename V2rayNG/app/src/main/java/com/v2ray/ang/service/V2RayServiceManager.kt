@@ -62,6 +62,13 @@ object V2RayServiceManager {
         }
     var currentConfig: ProfileItem? = null
 
+    @Synchronized
+    fun clearServiceControl(control: ServiceControl) {
+        if (serviceControl?.get() === control) {
+            serviceControl = null
+        }
+    }
+
     private var lastQueryTime = 0L
     private var mBuilder: NotificationCompat.Builder? = null
     private var speedNotificationJob: Job? = null
@@ -113,8 +120,15 @@ object V2RayServiceManager {
         }
 
         override fun protect(l: Long): Boolean {
-            val serviceControl = serviceControl?.get() ?: return true
-            return serviceControl.vpnProtect(l.toInt())
+            val control = serviceControl?.get() ?: return true
+
+            // The alternative Go dialer is process-global. Delay-test cores may keep
+            // dialing after the VPN service has stopped or while it is restarting.
+            // In that state there is no active VPN to bypass, so treating protect()
+            // as successful is correct and avoids calling a stale VpnService instance.
+            if (!control.isVpnActive()) return true
+
+            return control.vpnProtect(l.toInt())
         }
 
         override fun onEmitStatus(l: Long, s: String?): Long {
