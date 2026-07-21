@@ -498,7 +498,15 @@ object Utils {
         ContextCompat.RECEIVER_NOT_EXPORTED
     }
 
-    fun isXray(): Boolean = (ANG_PACKAGE.startsWith("com.v2ray.ang"))
+    /**
+     * This fork always embeds Xray-core.
+     *
+     * Upstream used the applicationId prefix to distinguish Xray from the
+     * legacy v2fly build. After branding the app as com.anonymouskeys.app,
+     * that check incorrectly returned false and generated the wrong inbound
+     * layout/ports, causing the VPN service to fail at startup.
+     */
+    fun isXray(): Boolean = true
 
 }
 
