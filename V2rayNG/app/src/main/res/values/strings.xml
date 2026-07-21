@@ -367,4 +367,7 @@
     <string name="title_pref_dpi_expert_args">Expert arguments</string>
     <string name="summary_pref_dpi_expert_args">Extra native ciadpi arguments appended after the selected preset</string>
 
+    <string name="main_dpi_switch">DPI</string>
+    <string name="main_dpi_switch_description">Enable or disable DPI bypass</string>
+    <string name="main_dpi_restart_hint">DPI mode will be applied on the next connection</string>
 </resources>

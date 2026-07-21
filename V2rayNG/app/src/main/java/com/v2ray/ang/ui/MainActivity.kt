@@ -24,10 +24,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.AppConfig.VPN
 import com.v2ray.ang.R
@@ -77,6 +79,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
     private var mItemTouchHelper: ItemTouchHelper? = null
+    private var dpiSwitch: SwitchMaterial? = null
+    private var updatingDpiSwitch = false
     val mainViewModel: MainViewModel by viewModels()
 
     // register activity result for requesting permission
@@ -199,6 +203,33 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         })
     }
 
+    override fun onResume() {
+        super.onResume()
+        syncDpiSwitch()
+    }
+
+    private fun syncDpiSwitch() {
+        val enabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_DPI_ENABLED, false)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (preferences.getBoolean(AppConfig.PREF_DPI_ENABLED, false) != enabled) {
+            preferences.edit().putBoolean(AppConfig.PREF_DPI_ENABLED, enabled).apply()
+        }
+        updatingDpiSwitch = true
+        dpiSwitch?.isChecked = enabled
+        updatingDpiSwitch = false
+    }
+
+    private fun setDpiEnabled(enabled: Boolean) {
+        MmkvManager.encodeSettings(AppConfig.PREF_DPI_ENABLED, enabled)
+        PreferenceManager.getDefaultSharedPreferences(this)
+            .edit()
+            .putBoolean(AppConfig.PREF_DPI_ENABLED, enabled)
+            .apply()
+        if (mainViewModel.isRunning.value == true) {
+            toast(R.string.main_dpi_restart_hint)
+        }
+    }
+
     private fun setupViewModel() {
         mainViewModel.updateListAction.observe(this) { index ->
             if (index >= 0) {
@@ -293,6 +324,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        val dpiItem = menu.findItem(R.id.action_dpi_switch)
+        dpiSwitch = dpiItem?.actionView?.findViewById(R.id.switch_dpi)
+        dpiSwitch?.setOnCheckedChangeListener { _, checked ->
+            if (!updatingDpiSwitch) setDpiEnabled(checked)
+        }
+        syncDpiSwitch()
 
         val searchItem = menu.findItem(R.id.search_view)
         if (searchItem != null) {
