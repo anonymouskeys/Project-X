@@ -203,11 +203,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        syncDpiSwitch()
-    }
-
     private fun syncDpiSwitch() {
         val enabled = MmkvManager.decodeSettingsBool(AppConfig.PREF_DPI_ENABLED, false)
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
@@ -316,6 +311,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     public override fun onResume() {
         super.onResume()
         mainViewModel.reloadServerList()
+        syncDpiSwitch()
     }
 
     public override fun onPause() {
