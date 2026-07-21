@@ -65,6 +65,15 @@ class SettingsActivity : BaseActivity() {
         private val delayTestUrl by lazy { findPreference<EditTextPreference>(AppConfig.PREF_DELAY_TEST_URL) }
         private val mode by lazy { findPreference<ListPreference>(AppConfig.PREF_MODE) }
 
+        private val dpiEnabled by lazy { findPreference<CheckBoxPreference>(AppConfig.PREF_DPI_ENABLED) }
+        private val dpiStrategy by lazy { findPreference<ListPreference>(AppConfig.PREF_DPI_STRATEGY) }
+        private val dpiSplitPosition by lazy { findPreference<EditTextPreference>(AppConfig.PREF_DPI_SPLIT_POSITION) }
+        private val dpiFakeTtl by lazy { findPreference<EditTextPreference>(AppConfig.PREF_DPI_FAKE_TTL) }
+        private val dpiFakeCount by lazy { findPreference<EditTextPreference>(AppConfig.PREF_DPI_FAKE_COUNT) }
+        private val dpiDelayMs by lazy { findPreference<EditTextPreference>(AppConfig.PREF_DPI_DELAY_MS) }
+        private val dpiPortsOnly by lazy { findPreference<CheckBoxPreference>(AppConfig.PREF_DPI_PORTS_80_443_ONLY) }
+        private val dpiExpertArgs by lazy { findPreference<EditTextPreference>(AppConfig.PREF_DPI_EXPERT_ARGS) }
+
         override fun onCreatePreferences(bundle: Bundle?, s: String?) {
             addPreferencesFromResource(R.xml.pref_settings)
 
@@ -204,6 +213,15 @@ class SettingsActivity : BaseActivity() {
             dnsHosts?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DNS_HOSTS)
             delayTestUrl?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DELAY_TEST_URL, AppConfig.DelayTestUrl)
 
+            dpiEnabled?.isChecked = MmkvManager.decodeSettingsBool(AppConfig.PREF_DPI_ENABLED, false)
+            dpiStrategy?.value = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_STRATEGY, "split")
+            dpiSplitPosition?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_SPLIT_POSITION, "1")
+            dpiFakeTtl?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_FAKE_TTL, "3")
+            dpiFakeCount?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_FAKE_COUNT, "1")
+            dpiDelayMs?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_DELAY_MS, "0")
+            dpiPortsOnly?.isChecked = MmkvManager.decodeSettingsBool(AppConfig.PREF_DPI_PORTS_80_443_ONLY, true)
+            dpiExpertArgs?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_EXPERT_ARGS, "")
+
             initSharedPreference()
         }
 
@@ -215,6 +233,11 @@ class SettingsActivity : BaseActivity() {
                 muxXudpConcurrency,
                 fragmentLength,
                 fragmentInterval,
+                dpiSplitPosition,
+                dpiFakeTtl,
+                dpiFakeCount,
+                dpiDelayMs,
+                dpiExpertArgs,
                 autoUpdateInterval,
                 socksPort,
                 remoteDns,

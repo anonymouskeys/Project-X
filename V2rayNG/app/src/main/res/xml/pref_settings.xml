@@ -148,6 +148,72 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/title_dpi_settings"
+        app:initialExpandedChildrenCount="0">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_dpi_enabled"
+            android:summary="@string/summary_pref_dpi_enabled_scaffold"
+            android:title="@string/title_pref_dpi_enabled" />
+
+        <ListPreference
+            android:defaultValue="split"
+            android:dependency="pref_dpi_enabled"
+            android:entries="@array/dpi_strategy_entries"
+            android:entryValues="@array/dpi_strategy_values"
+            android:key="pref_dpi_strategy"
+            android:summary="%s"
+            android:title="@string/title_pref_dpi_strategy" />
+
+        <EditTextPreference
+            android:defaultValue="1"
+            android:dependency="pref_dpi_enabled"
+            android:inputType="numberSigned"
+            android:key="pref_dpi_split_position"
+            android:summary="@string/summary_pref_dpi_split_position"
+            android:title="@string/title_pref_dpi_split_position" />
+
+        <EditTextPreference
+            android:defaultValue="3"
+            android:dependency="pref_dpi_enabled"
+            android:inputType="number"
+            android:key="pref_dpi_fake_ttl"
+            android:summary="@string/summary_pref_dpi_fake_ttl"
+            android:title="@string/title_pref_dpi_fake_ttl" />
+
+        <EditTextPreference
+            android:defaultValue="1"
+            android:dependency="pref_dpi_enabled"
+            android:inputType="number"
+            android:key="pref_dpi_fake_count"
+            android:summary="@string/summary_pref_dpi_fake_count"
+            android:title="@string/title_pref_dpi_fake_count" />
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:dependency="pref_dpi_enabled"
+            android:inputType="number"
+            android:key="pref_dpi_delay_ms"
+            android:summary="@string/summary_pref_dpi_delay_ms"
+            android:title="@string/title_pref_dpi_delay_ms" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:dependency="pref_dpi_enabled"
+            android:key="pref_dpi_ports_80_443_only"
+            android:summary="@string/summary_pref_dpi_ports_only"
+            android:title="@string/title_pref_dpi_ports_only" />
+
+        <EditTextPreference
+            android:defaultValue=""
+            android:dependency="pref_dpi_enabled"
+            android:key="pref_dpi_expert_args"
+            android:summary="@string/summary_pref_dpi_expert_args"
+            android:title="@string/title_pref_dpi_expert_args" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/title_sub_setting"
         app:initialExpandedChildrenCount="0">
         <CheckBoxPreference

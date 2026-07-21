@@ -44,6 +44,12 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             AppConfig.PREF_FRAGMENT_PACKETS,
             AppConfig.PREF_FRAGMENT_LENGTH,
             AppConfig.PREF_FRAGMENT_INTERVAL,
+            AppConfig.PREF_DPI_STRATEGY,
+            AppConfig.PREF_DPI_SPLIT_POSITION,
+            AppConfig.PREF_DPI_FAKE_TTL,
+            AppConfig.PREF_DPI_FAKE_COUNT,
+            AppConfig.PREF_DPI_DELAY_MS,
+            AppConfig.PREF_DPI_EXPERT_ARGS,
             AppConfig.PREF_MUX_XUDP_QUIC,
                 -> {
                 MmkvManager.encodeSettings(key, sharedPreferences.getString(key, ""))
@@ -64,6 +70,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             AppConfig.PREF_START_SCAN_IMMEDIATE,
             AppConfig.SUBSCRIPTION_AUTO_UPDATE,
             AppConfig.PREF_FRAGMENT_ENABLED,
+            AppConfig.PREF_DPI_ENABLED,
+            AppConfig.PREF_DPI_PORTS_80_443_ONLY,
             AppConfig.PREF_MUX_ENABLED,
                 -> {
                 MmkvManager.encodeSettings(key, sharedPreferences.getBoolean(key, false))

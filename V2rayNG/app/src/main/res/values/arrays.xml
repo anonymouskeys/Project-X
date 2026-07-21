@@ -218,4 +218,24 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="dpi_strategy_entries">
+        <item>Split</item>
+        <item>Disorder</item>
+        <item>Fake</item>
+        <item>Fake + Split</item>
+        <item>OOB</item>
+        <item>TLS record split</item>
+        <item>Auto</item>
+    </string-array>
+
+    <string-array name="dpi_strategy_values" translatable="false">
+        <item>split</item>
+        <item>disorder</item>
+        <item>fake</item>
+        <item>fake_split</item>
+        <item>oob</item>
+        <item>tls_record_split</item>
+        <item>auto</item>
+    </string-array>
+
 </resources>

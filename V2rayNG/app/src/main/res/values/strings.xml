@@ -350,4 +350,21 @@
         <item>Not Bypass</item>
     </string-array>
 
+    <string name="title_dpi_settings">Advanced DPI bypass (experimental)</string>
+    <string name="title_pref_dpi_enabled">Enable Advanced DPI layer</string>
+    <string name="summary_pref_dpi_enabled_scaffold">Infrastructure only in this build. The setting is saved but does not alter Xray traffic yet.</string>
+    <string name="title_pref_dpi_strategy">Desynchronization strategy</string>
+    <string name="title_pref_dpi_split_position">Split position</string>
+    <string name="summary_pref_dpi_split_position">Byte offset; negative values count from a detected host boundary</string>
+    <string name="title_pref_dpi_fake_ttl">Fake packet TTL</string>
+    <string name="summary_pref_dpi_fake_ttl">Hop limit for a future fake packet</string>
+    <string name="title_pref_dpi_fake_count">Fake packet count</string>
+    <string name="summary_pref_dpi_fake_count">Number of future fake packets</string>
+    <string name="title_pref_dpi_delay_ms">Delay before real data, ms</string>
+    <string name="summary_pref_dpi_delay_ms">Zero means no artificial delay</string>
+    <string name="title_pref_dpi_ports_only">Only ports 80 and 443</string>
+    <string name="summary_pref_dpi_ports_only">Do not apply the future DPI layer to other destination ports</string>
+    <string name="title_pref_dpi_expert_args">Expert arguments</string>
+    <string name="summary_pref_dpi_expert_args">Reserved for native ByeDPI arguments; currently inactive</string>
+
 </resources>
