@@ -11,23 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Setup JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '17'
+          java-version: "17"
           cache: gradle
+          cache-dependency-path: V2rayNG/**/*.gradle*
 
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
+      - name: Make Gradle executable
+        run: chmod +x V2rayNG/gradlew
 
       - name: Build Debug APK
+        working-directory: V2rayNG
         run: ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: apk-debug
-          path: V2rayNG/build/outputs/apk/debug/*.apk
+          name: v2rayng-debug
+          path: V2rayNG/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
