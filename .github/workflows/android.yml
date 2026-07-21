@@ -49,14 +49,18 @@ jobs:
             -o ../V2rayNG/app/libs/libv2ray.aar \
             ./
 
-      - name: Verify libv2ray AAR
-        run: |
-          test -s V2rayNG/app/libs/libv2ray.aar
-          ls -lh V2rayNG/app/libs/libv2ray.aar
-
       - name: Make Gradle executable
         run: chmod +x V2rayNG/gradlew
 
       - name: Build Debug APK
         working-directory: V2rayNG
         run: ./gradlew assembleDebug
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: AnonymousKeys-Debug
+          path: |
+            V2rayNG/app/build/outputs/apk/**/*.apk
+          if-no-files-found: error
+          retention-days: 30
