@@ -80,15 +80,14 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x V2rayNG/gradlew
 
-      - name: Build Debug APK
+      - name: Build F-Droid Universal APK
         working-directory: V2rayNG
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleFdroidDebug
 
-      - name: Upload Debug APK
+      - name: Upload F-Droid Universal APK
         uses: actions/upload-artifact@v4
         with:
-          name: AnonymousKeys-Debug
-          path: |
-            V2rayNG/app/build/outputs/apk/**/*.apk
+          name: AnonymousKeys-FDroid-Universal
+          path: V2rayNG/app/build/outputs/apk/fdroid/debug/*universal.apk
           if-no-files-found: error
           retention-days: 30
