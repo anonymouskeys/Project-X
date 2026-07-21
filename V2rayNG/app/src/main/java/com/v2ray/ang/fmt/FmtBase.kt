@@ -4,6 +4,7 @@ import com.v2ray.ang.AppConfig
 import com.v2ray.ang.dto.NetworkType
 import com.v2ray.ang.dto.ProfileItem
 import com.v2ray.ang.extension.isNotNullEmpty
+import com.v2ray.ang.util.JsonUtil
 import com.v2ray.ang.util.Utils
 import java.net.URI
 
@@ -27,7 +28,13 @@ open class FmtBase {
 
     fun getQueryParam(uri: URI): Map<String, String> {
         return uri.rawQuery.split("&")
-            .associate { it.split("=").let { (k, v) -> k to Utils.urlDecode(v) } }
+            .mapNotNull { item ->
+                val parts = item.split("=", limit = 2)
+                val key = parts.firstOrNull()?.takeIf { it.isNotEmpty() } ?: return@mapNotNull null
+                val value = parts.getOrElse(1) { "" }
+                key to Utils.urlDecode(value)
+            }
+            .toMap()
     }
 
     fun getItemFormQuery(config: ProfileItem, queryParam: Map<String, String>, allowInsecure: Boolean) {
@@ -43,7 +50,7 @@ open class FmtBase {
         config.serviceName = queryParam["serviceName"]
         config.authority = queryParam["authority"]
         config.xhttpMode = queryParam["mode"]
-        config.xhttpExtra = queryParam["extra"]
+        config.xhttpExtra = JsonUtil.normalizeObjectString(queryParam["extra"])
 
         config.security = queryParam["security"]
         if (config.security != AppConfig.TLS && config.security != AppConfig.REALITY) {

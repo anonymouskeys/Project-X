@@ -39,14 +39,46 @@ object JsonUtil {
         return gsonPre.toJson(src)
     }
 
-    fun parseString(src: String?): JsonObject? {
-        if (src == null)
-            return null
-        try {
-            return JsonParser.parseString(src).getAsJsonObject()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return null
+    /**
+     * Normalizes an object received from URI query parameters.
+     *
+     * Some subscription generators encode XHTTP `extra` twice, leaving a value
+     * such as `%7B%22xmux%22...%7D` after the regular query decoding pass.
+     * Decode only values that look like a percent-encoded JSON object and keep
+     * the number of passes bounded to avoid changing ordinary JSON strings.
+     */
+    fun normalizeObjectString(src: String?): String? {
+        var value = src?.trim()?.removePrefix("\uFEFF")?.takeIf { it.isNotEmpty() }
+            ?: return null
+
+        repeat(2) {
+            if (!looksLikeEncodedObject(value)) return@repeat
+            val decoded = Utils.urlDecode(value).trim().removePrefix("\uFEFF")
+            if (decoded == value) return@repeat
+            value = decoded
         }
+        return value
+    }
+
+    fun parseString(src: String?): JsonObject? {
+        val normalized = normalizeObjectString(src) ?: return null
+        return try {
+            val element = JsonParser.parseString(normalized)
+            when {
+                element.isJsonObject -> element.asJsonObject
+                element.isJsonPrimitive && element.asJsonPrimitive.isString -> {
+                    val nested = normalizeObjectString(element.asString) ?: return null
+                    JsonParser.parseString(nested).takeIf { it.isJsonObject }?.asJsonObject
+                }
+                else -> null
+            }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun looksLikeEncodedObject(value: String): Boolean {
+        return value.startsWith("%7B", ignoreCase = true) ||
+            value.startsWith("%257B", ignoreCase = true)
     }
 }
