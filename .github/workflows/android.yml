@@ -43,7 +43,7 @@ jobs:
           mkdir -p ../V2rayNG/app/libs
           gomobile bind \
             -v \
-            -androidapi 24 \
+            -androidapi 21 \
             -trimpath \
             -ldflags='-s -w -buildid= -checklinkname=0' \
             -o ../V2rayNG/app/libs/libv2ray.aar \
