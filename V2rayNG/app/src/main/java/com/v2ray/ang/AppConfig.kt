@@ -65,9 +65,9 @@ object AppConfig {
     const val PROTOCOL_FREEDOM: String = "freedom"
 
     /** Broadcast actions. */
-    const val BROADCAST_ACTION_SERVICE = "com.v2ray.ang.action.service"
-    const val BROADCAST_ACTION_ACTIVITY = "com.v2ray.ang.action.activity"
-    const val BROADCAST_ACTION_WIDGET_CLICK = "com.v2ray.ang.action.widget.click"
+    const val BROADCAST_ACTION_SERVICE = "com.anonymouskeys.app.action.service"
+    const val BROADCAST_ACTION_ACTIVITY = "com.anonymouskeys.app.action.activity"
+    const val BROADCAST_ACTION_WIDGET_CLICK = "com.anonymouskeys.app.action.widget.click"
 
     /** Tasker extras. */
     const val TASKER_EXTRA_BUNDLE = "com.twofortyfouram.locale.intent.extra.BUNDLE"
