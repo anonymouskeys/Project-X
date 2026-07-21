@@ -1,48 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <style name="AppThemeDayNight" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/brand_black</item>
+    <style name="AppThemeDayNight" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/ak_background</item>
         <item name="colorPrimaryVariant">@color/brand_surface</item>
         <item name="colorSecondary">@color/brand_magenta</item>
-        <item name="colorAccent">@color/brand_magenta</item>
-        <item name="android:colorAccent">@color/brand_magenta</item>
-        <item name="android:windowBackground">@color/brand_black</item>
-        <item name="android:colorBackground">@color/brand_black</item>
-        <item name="android:textColorPrimary">@color/brand_text</item>
-        <item name="android:textColorSecondary">@color/brand_text_secondary</item>
-        <item name="android:statusBarColor">@color/brand_black</item>
-        <item name="android:navigationBarColor">@color/brand_black</item>
+        <item name="colorAccent">@color/ak_magenta</item>
+        <item name="android:colorAccent">@color/ak_magenta</item>
+        <item name="android:windowBackground">@color/ak_background</item>
+        <item name="android:colorBackground">@color/ak_background</item>
+        <item name="android:textColorPrimary">@color/ak_text</item>
+        <item name="android:textColorSecondary">@color/ak_text_secondary</item>
+        <item name="android:statusBarColor">@color/ak_background</item>
+        <item name="android:navigationBarColor">@color/ak_background</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowLightNavigationBar">false</item>
-        <item name="colorControlNormal">@color/brand_text</item>
-        <item name="colorControlActivated">@color/brand_magenta</item>
+        <item name="colorControlNormal">@color/ak_text</item>
+        <item name="colorControlActivated">@color/ak_magenta</item>
         <item name="colorSurface">@color/brand_surface</item>
+        <item name="colorPrimaryDark">@color/ak_background</item>
     </style>
-
     <style name="AppThemeDayNight.NoActionBar" parent="AppThemeDayNight">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <style name="AppThemeDayNight.Launcher" parent="AppThemeDayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/brand_splash_background</item>
+        <item name="android:windowBackground">@drawable/ak_splash_background</item>
     </style>
-
     <style name="AppTheme" parent="AppThemeDayNight" />
     <style name="AppTheme.NoActionBar" parent="AppThemeDayNight.NoActionBar" />
-
     <style name="AppTheme.NoActionBar.Translucent" parent="AppThemeDayNight.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
-
     <style name="BrandedSwitch" parent="AppThemeDayNight">
-        <item name="colorAccent">@color/brand_green</item>
-    </style>
-
-    <style name="TabLayoutTextStyle" parent="TextAppearance.Design.Tab">
-        <item name="android:textColor">@color/brand_text</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">14sp</item>
+        <item name="colorAccent">@color/ak_green</item>
     </style>
 </resources>

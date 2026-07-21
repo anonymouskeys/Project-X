@@ -397,6 +397,7 @@ object Utils {
 
 
     fun setNightMode() {
+        // Anonymous Keys uses one consistent dark brand theme.
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 

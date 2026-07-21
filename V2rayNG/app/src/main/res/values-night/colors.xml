@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <color name="brand_black">#050509</color>
     <color name="brand_surface">#0D0B16</color>
@@ -14,8 +14,18 @@
     <color name="colorPingRed">#FF3D9A</color>
     <color name="colorConfigType">#24D9FF</color>
     <color name="color_fab_active">#A833FF</color>
-    <color name="color_fab_inactive">#453852</color>
+    <color name="color_fab_inactive">#51415F</color>
     <color name="color_secondary">#B9AACD</color>
-    <color name="colorPrimary">#09070F</color>
+    <color name="colorPrimary">#07050D</color>
     <color name="colorAccent">#E72CFF</color>
+    <color name="ak_background">#050509</color>
+    <color name="ak_surface">#0D0B16</color>
+    <color name="ak_surface_raised">#171126</color>
+    <color name="ak_border">#3C2858</color>
+    <color name="ak_purple">#A833FF</color>
+    <color name="ak_magenta">#E72CFF</color>
+    <color name="ak_cyan">#24D9FF</color>
+    <color name="ak_green">#00E89D</color>
+    <color name="ak_text">#F7F2FF</color>
+    <color name="ak_text_secondary">#B9AACD</color>
 </resources>

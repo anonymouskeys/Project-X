@@ -1,23 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/brand_nav_header_bg"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="sans"
-        android:gravity="center"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textColor="@color/brand_text"
-        android:textStyle="bold" />
-
-
+<?xml version='1.0' encoding='utf-8'?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="@dimen/nav_header_height" android:background="@drawable/ak_nav_header_background" android:gravity="center" android:orientation="vertical" android:padding="@dimen/activity_horizontal_margin">
+    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_gravity="center" android:fontFamily="sans" android:gravity="center" android:paddingTop="@dimen/nav_header_vertical_spacing" android:text="@string/app_name" android:textAppearance="@style/TextAppearance.AppCompat.Title" android:textColor="@color/ak_text" android:textStyle="bold" />
 </LinearLayout>
