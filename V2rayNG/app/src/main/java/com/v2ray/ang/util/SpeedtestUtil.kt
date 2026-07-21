@@ -37,13 +37,44 @@ object SpeedtestUtil {
         return time
     }
 
-    fun realPing(config: String): Long {
-        return try {
-            Libv2ray.measureOutboundDelay(config, Utils.getDelayTestUrl())
-        } catch (e: Exception) {
-            Log.d(AppConfig.ANG_PACKAGE, "realPing: $e")
-            -1L
+    fun realPing(
+        config: String,
+        attempts: Int = 1,
+        retryDelayMs: Long = 0L
+    ): Long {
+        val safeAttempts = attempts.coerceIn(1, 3)
+        var lastError: Exception? = null
+
+        repeat(safeAttempts) { attempt ->
+            val useFallbackUrl = attempt % 2 == 1
+            try {
+                val delay = Libv2ray.measureOutboundDelay(
+                    config,
+                    Utils.getDelayTestUrl(useFallbackUrl)
+                )
+                if (delay >= 0L) return delay
+            } catch (e: Exception) {
+                lastError = e
+                Log.d(
+                    AppConfig.ANG_PACKAGE,
+                    "realPing attempt ${attempt + 1}/$safeAttempts: $e"
+                )
+            }
+
+            if (attempt + 1 < safeAttempts && retryDelayMs > 0L) {
+                try {
+                    Thread.sleep(retryDelayMs)
+                } catch (_: InterruptedException) {
+                    Thread.currentThread().interrupt()
+                    return -1L
+                }
+            }
         }
+
+        if (lastError != null) {
+            Log.d(AppConfig.ANG_PACKAGE, "realPing failed after $safeAttempts attempt(s): $lastError")
+        }
+        return -1L
     }
 
     fun ping(url: String): String {
