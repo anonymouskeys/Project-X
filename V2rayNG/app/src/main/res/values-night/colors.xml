@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_fab_active">#f97910</color>
-    <color name="color_fab_inactive">#646464</color>
-    <color name="color_secondary">#BDBDBD</color>
-
-    <color name="colorPrimary">#212121</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="brand_black">#050509</color>
+    <color name="brand_surface">#0D0B16</color>
+    <color name="brand_surface_2">#171126</color>
+    <color name="brand_purple">#A833FF</color>
+    <color name="brand_magenta">#E72CFF</color>
+    <color name="brand_cyan">#24D9FF</color>
+    <color name="brand_green">#00E89D</color>
+    <color name="brand_text">#F7F2FF</color>
+    <color name="brand_text_secondary">#B9AACD</color>
+    <color name="brand_divider">#392653</color>
+    <color name="colorPing">#00E89D</color>
+    <color name="colorPingRed">#FF3D9A</color>
+    <color name="colorConfigType">#24D9FF</color>
+    <color name="color_fab_active">#A833FF</color>
+    <color name="color_fab_inactive">#453852</color>
+    <color name="color_secondary">#B9AACD</color>
+    <color name="colorPrimary">#09070F</color>
+    <color name="colorAccent">#E72CFF</color>
 </resources>

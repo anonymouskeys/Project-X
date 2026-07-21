@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/cardview_margin"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="14dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="@color/brand_surface_2">
 
         <LinearLayout
             android:id="@+id/info_container"
@@ -21,14 +23,14 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/selectableItemBackground"
+            android:background="@drawable/brand_card_background"
             android:gravity="center"
             android:nextFocusRight="@+id/layout_share"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/layout_indicator"
-                android:layout_width="6dp"
+                android:layout_width="4dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="vertical" />
