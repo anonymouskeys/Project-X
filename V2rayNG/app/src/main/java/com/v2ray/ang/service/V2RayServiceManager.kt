@@ -152,8 +152,10 @@ object V2RayServiceManager {
             Log.w(ANG_PACKAGE, "ByeDPI unavailable; falling back to normal Xray path")
         }
         val result = V2rayConfigManager.getV2rayConfig(service, guid)
-        if (!result.status)
+        if (!result.status) {
+            ByeDpiManager.stop()
             return
+        }
 
         try {
             val mFilter = IntentFilter(AppConfig.BROADCAST_ACTION_SERVICE)
@@ -181,6 +183,7 @@ object V2RayServiceManager {
 
             PluginUtil.runPlugin(service, config, result.domainPort)
         } else {
+            ByeDpiManager.stop()
             MessageUtil.sendMsg2UI(service, AppConfig.MSG_STATE_START_FAILURE, "")
             cancelNotification()
         }

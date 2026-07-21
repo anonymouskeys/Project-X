@@ -5,9 +5,12 @@ import android.util.Log
 import com.v2ray.ang.AppConfig
 import com.v2ray.ang.handler.MmkvManager
 import java.io.File
+import java.io.IOException
+import java.io.InterruptedIOException
 import java.net.InetSocketAddress
 import java.net.Socket
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicLong
 
 /** Runtime wrapper around the official ciadpi local SOCKS proxy. */
 data class ByeDpiSettings(
@@ -39,7 +42,14 @@ object ByeDpiManager {
 
     @Volatile var state: State = State.STOPPED
         private set
+
     @Volatile private var process: Process? = null
+    @Volatile private var logThread: Thread? = null
+    @Volatile private var waitThread: Thread? = null
+    @Volatile private var stopping = false
+
+    /** Invalidates callbacks belonging to an older process instance. */
+    private val generation = AtomicLong(0)
 
     fun isRunning(): Boolean = state == State.RUNNING && process?.isAlive == true
 
@@ -51,7 +61,10 @@ object ByeDpiManager {
             return false
         }
         if (isRunning()) return true
-        stop()
+
+        stopLocked()
+        stopping = false
+        val myGeneration = generation.incrementAndGet()
 
         val binary = File(context.applicationInfo.nativeLibraryDir, "libciadpi.so")
         if (!binary.isFile) {
@@ -77,62 +90,149 @@ object ByeDpiManager {
         return try {
             state = State.STARTING
             Log.i(AppConfig.ANG_PACKAGE, "ByeDPI command: ${command.joinToString(" ")}")
+
             val created = ProcessBuilder(command)
                 .directory(context.filesDir)
                 .redirectErrorStream(true)
                 .start()
             process = created
-            Thread({
-                created.inputStream.bufferedReader().useLines { lines ->
-                    lines.forEach { Log.i("ByeDPI", it) }
-                }
-            }, "ByeDPI-log").apply { isDaemon = true }.start()
-            Thread({
-                val code = created.waitFor()
-                Log.w(AppConfig.ANG_PACKAGE, "ByeDPI exited with code $code")
-                if (process === created) {
-                    process = null
-                    state = if (code == 0) State.STOPPED else State.FAILED
-                }
-            }, "ByeDPI-wait").apply { isDaemon = true }.start()
 
-            val ready = waitForPort(2500)
-            state = if (ready) State.RUNNING else State.FAILED
-            if (!ready) stop()
-            ready
+            logThread = Thread({ readProcessLog(created, myGeneration) }, "ByeDPI-log").apply {
+                isDaemon = true
+                start()
+            }
+            waitThread = Thread({ waitForExit(created, myGeneration) }, "ByeDPI-wait").apply {
+                isDaemon = true
+                start()
+            }
+
+            val ready = waitForPort(created, myGeneration, 2500)
+            if (ready && process === created && created.isAlive) {
+                state = State.RUNNING
+                Log.i(AppConfig.ANG_PACKAGE, "ByeDPI started on ${AppConfig.LOOPBACK}:${AppConfig.PORT_BYEDPI}")
+                true
+            } else {
+                if (process === created) state = State.FAILED
+                stopLocked()
+                false
+            }
         } catch (e: Exception) {
             Log.e(AppConfig.ANG_PACKAGE, "ByeDPI start failed", e)
             state = State.FAILED
-            stop()
+            stopLocked()
             false
+        }
+    }
+
+    /**
+     * Reads merged stdout/stderr. Closing the process stream during normal VPN shutdown may throw
+     * InterruptedIOException/IOException on Android. Those are expected and must never crash the daemon.
+     */
+    private fun readProcessLog(created: Process, myGeneration: Long) {
+        try {
+            created.inputStream.bufferedReader().use { reader ->
+                while (generation.get() == myGeneration) {
+                    val line = reader.readLine() ?: break
+                    Log.i("ByeDPI", line)
+                }
+            }
+        } catch (_: InterruptedIOException) {
+            if (!stopping && generation.get() == myGeneration) {
+                Log.w(AppConfig.ANG_PACKAGE, "ByeDPI log reader interrupted unexpectedly")
+            }
+        } catch (e: IOException) {
+            if (!stopping && generation.get() == myGeneration && created.isAlive) {
+                Log.w(AppConfig.ANG_PACKAGE, "ByeDPI log reader stopped", e)
+            }
+        } catch (e: Throwable) {
+            // A background logging thread must never terminate the Android process.
+            if (!stopping && generation.get() == myGeneration) {
+                Log.e(AppConfig.ANG_PACKAGE, "Unexpected ByeDPI logger failure", e)
+            }
+        }
+    }
+
+    private fun waitForExit(created: Process, myGeneration: Long) {
+        try {
+            val code = created.waitFor()
+            val intentional = stopping || generation.get() != myGeneration || process !== created
+            if (intentional) {
+                Log.i(AppConfig.ANG_PACKAGE, "ByeDPI stopped with code $code")
+            } else {
+                Log.w(AppConfig.ANG_PACKAGE, "ByeDPI exited unexpectedly with code $code")
+            }
+
+            synchronized(this) {
+                if (generation.get() == myGeneration && process === created) {
+                    process = null
+                    state = if (intentional || code == 0) State.STOPPED else State.FAILED
+                }
+            }
+        } catch (_: InterruptedException) {
+            Thread.currentThread().interrupt()
+        } catch (e: Throwable) {
+            if (!stopping && generation.get() == myGeneration) {
+                Log.e(AppConfig.ANG_PACKAGE, "ByeDPI wait thread failed", e)
+            }
         }
     }
 
     @Synchronized
     fun stop() {
-        val current = process
-        process = null
-        if (current != null) {
-            current.destroy()
-            try {
-                if (!current.waitFor(500, TimeUnit.MILLISECONDS)) current.destroyForcibly()
-            } catch (_: Exception) {
-                current.destroyForcibly()
-            }
-        }
-        state = State.STOPPED
+        stopLocked()
     }
 
-    private fun waitForPort(timeoutMs: Long): Boolean {
+    /** Caller must hold this object's monitor. */
+    private fun stopLocked() {
+        stopping = true
+        generation.incrementAndGet()
+
+        val current = process
+        process = null
+        state = State.STOPPED
+
+        if (current != null) {
+            try {
+                current.destroy()
+                if (!current.waitFor(700, TimeUnit.MILLISECONDS)) {
+                    current.destroyForcibly()
+                    current.waitFor(700, TimeUnit.MILLISECONDS)
+                }
+            } catch (_: InterruptedException) {
+                Thread.currentThread().interrupt()
+                runCatching { current.destroyForcibly() }
+            } catch (e: Exception) {
+                Log.w(AppConfig.ANG_PACKAGE, "ByeDPI stop failed", e)
+                runCatching { current.destroyForcibly() }
+            } finally {
+                runCatching { current.inputStream.close() }
+                runCatching { current.errorStream.close() }
+                runCatching { current.outputStream.close() }
+            }
+        }
+
+        logThread?.interrupt()
+        waitThread?.interrupt()
+        logThread = null
+        waitThread = null
+    }
+
+    private fun waitForPort(created: Process, myGeneration: Long, timeoutMs: Long): Boolean {
         val end = System.currentTimeMillis() + timeoutMs
         while (System.currentTimeMillis() < end) {
-            val p = process
-            if (p == null || !p.isAlive) return false
+            if (generation.get() != myGeneration || process !== created || !created.isAlive) return false
             try {
-                Socket().use { it.connect(InetSocketAddress(AppConfig.LOOPBACK, AppConfig.PORT_BYEDPI), 150) }
+                Socket().use {
+                    it.connect(InetSocketAddress(AppConfig.LOOPBACK, AppConfig.PORT_BYEDPI), 150)
+                }
                 return true
-            } catch (_: Exception) {
-                Thread.sleep(75)
+            } catch (_: IOException) {
+                try {
+                    Thread.sleep(75)
+                } catch (_: InterruptedException) {
+                    Thread.currentThread().interrupt()
+                    return false
+                }
             }
         }
         return false
@@ -169,11 +269,17 @@ object ByeDpiManager {
         var escaped = false
         for (c in raw) {
             when {
-                escaped -> { token.append(c); escaped = false }
+                escaped -> {
+                    token.append(c)
+                    escaped = false
+                }
                 c == '\\' -> escaped = true
                 quote != null && c == quote -> quote = null
                 quote == null && (c == '\'' || c == '"') -> quote = c
-                quote == null && c.isWhitespace() -> if (token.isNotEmpty()) { out += token.toString(); token.clear() }
+                quote == null && c.isWhitespace() -> if (token.isNotEmpty()) {
+                    out += token.toString()
+                    token.clear()
+                }
                 else -> token.append(c)
             }
         }
