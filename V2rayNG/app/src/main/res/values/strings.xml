@@ -352,7 +352,7 @@
 
     <string name="title_dpi_settings">Advanced DPI bypass (experimental)</string>
     <string name="title_pref_dpi_enabled">Enable Advanced DPI layer</string>
-    <string name="summary_pref_dpi_enabled_scaffold">Runs the native ByeDPI SOCKS layer for the connection from Xray to the selected server. Falls back safely if startup fails.</string>
+    <string name="summary_pref_dpi_enabled_scaffold">Runs the native ByeDPI SOCKS layer for the Xray connection to the selected server. Automatic presets try progressively stronger upstream-supported strategies and ciadpi caches the successful group per destination.</string>
     <string name="title_pref_dpi_strategy">Desynchronization strategy</string>
     <string name="title_pref_dpi_split_position">Split position</string>
     <string name="summary_pref_dpi_split_position">ByeDPI position syntax, for example 1+s, 3+s, -1 or 0+sm</string>

@@ -219,23 +219,45 @@
     </string-array>
 
     <string-array name="dpi_strategy_entries">
-        <item>Split</item>
-        <item>Disorder</item>
-        <item>Fake</item>
-        <item>Fake + Split</item>
-        <item>OOB</item>
-        <item>TLS record split</item>
-        <item>Auto</item>
+        <item>Auto — balanced</item>
+        <item>Auto — compatibility</item>
+        <item>Auto — aggressive</item>
+        <item>Split — custom position</item>
+        <item>Split — SNI</item>
+        <item>Split — middle of SNI</item>
+        <item>Split — multiple SNI points</item>
+        <item>Disorder — custom position</item>
+        <item>Disorder — first byte</item>
+        <item>Split + disorder — SNI</item>
+        <item>Fake — TTL</item>
+        <item>Fake — randomized TLS</item>
+        <item>Fake + disorder</item>
+        <item>Fake + split + disorder</item>
+        <item>OOB — custom position</item>
+        <item>Disorder + OOB</item>
+        <item>TLS record — custom position</item>
+        <item>TLS record — SNI</item>
     </string-array>
 
     <string-array name="dpi_strategy_values" translatable="false">
+        <item>auto_balanced</item>
+        <item>auto_compat</item>
+        <item>auto_aggressive</item>
         <item>split</item>
+        <item>split_sni</item>
+        <item>split_sni_middle</item>
+        <item>split_multi</item>
         <item>disorder</item>
+        <item>disorder_linux</item>
+        <item>disorder_sni</item>
         <item>fake</item>
+        <item>fake_random</item>
+        <item>fake_disorder</item>
         <item>fake_split</item>
         <item>oob</item>
+        <item>disoob</item>
         <item>tls_record_split</item>
-        <item>auto</item>
+        <item>tls_record_sni</item>
     </string-array>
 
 </resources>

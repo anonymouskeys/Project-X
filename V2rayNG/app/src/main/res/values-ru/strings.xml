@@ -349,7 +349,7 @@
 
     <string name="title_dpi_settings">Продвинутый обход DPI (экспериментально)</string>
     <string name="title_pref_dpi_enabled">Включить продвинутый DPI-слой</string>
-    <string name="summary_pref_dpi_enabled_scaffold">Запускает нативный ByeDPI SOCKS-слой для соединения Xray с выбранным сервером. При ошибке безопасно возвращается к обычному Xray.</string>
+    <string name="summary_pref_dpi_enabled_scaffold">Запускает нативный ByeDPI SOCKS-слой для соединения Xray с выбранным сервером. Автоматические профили перебирают всё более сильные штатные стратегии, а ciadpi запоминает рабочую группу для адреса.</string>
     <string name="title_pref_dpi_strategy">Стратегия десинхронизации</string>
     <string name="title_pref_dpi_split_position">Позиция разделения</string>
     <string name="summary_pref_dpi_split_position">Синтаксис позиции ByeDPI: например 1+s, 3+s, -1 или 0+sm</string>

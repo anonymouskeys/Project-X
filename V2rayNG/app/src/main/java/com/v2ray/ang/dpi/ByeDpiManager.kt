@@ -238,24 +238,73 @@ object ByeDpiManager {
         return false
     }
 
+    /**
+     * Presets are intentionally composed only from options supported by upstream ciadpi.
+     * "auto" remains the safe default and now uses several fallback groups.
+     */
     private fun presetArguments(s: ByeDpiSettings): List<String> {
         val pos = s.splitPosition.ifBlank { "1+s" }
-        val repeatedFake = mutableListOf<String>()
-        repeat(s.fakeCount) { repeatedFake += listOf("--fake", "-1", "--ttl", s.fakeTtl.toString()) }
+        val ttl = s.fakeTtl.toString()
+
+        fun repeatedFake(position: String = "-1", withRandomTls: Boolean = false): List<String> {
+            val args = mutableListOf<String>()
+            repeat(s.fakeCount) {
+                args += listOf("--fake", position, "--ttl", ttl)
+                if (withRandomTls) args += listOf("--fake-tls-mod", "rand")
+            }
+            return args
+        }
+
         return when (s.strategy) {
+            // Simple/compatible modes.
             "split" -> listOf("--split", pos)
+            "split_sni" -> listOf("--split", "1+s")
+            "split_sni_middle" -> listOf("--split", "0+sm")
+            "split_multi" -> listOf("--split", "1+s", "--split", "3+s")
             "disorder" -> listOf("--disorder", pos)
-            "fake" -> repeatedFake
-            "fake_split" -> listOf("--split", "1+s", "--disorder", "3+s") + repeatedFake
+            "disorder_linux" -> listOf("--disorder", "1")
+            "disorder_sni" -> listOf("--split", "1+s", "--disorder", "3+s")
+
+            // Fake packet modes. fake+disorder is useful when TTL alone is unreliable.
+            "fake" -> repeatedFake()
+            "fake_random" -> repeatedFake(withRandomTls = true)
+            "fake_disorder" -> listOf("--disorder", "1") + repeatedFake()
+            "fake_split" -> listOf("--split", "1+s", "--disorder", "3+s") + repeatedFake()
+
+            // OOB/TLS record modes can confuse middleboxes, so separate presets are kept.
             "oob" -> listOf("--oob", pos, "--oob-data", "a")
+            "disoob" -> listOf("--disoob", "3+s", "--disorder", "1")
             "tls_record_split" -> listOf("--tlsrec", pos)
-            "auto" -> listOf(
-                "--split", "1+s", "--disorder", "3+s",
-                "--auto=torst", "--fake", "-1", "--ttl", s.fakeTtl.toString(), "--fake-tls-mod", "rand",
-                "--auto=torst", "--tlsrec", "3+s",
-                "--auto=torst", "--oob", "1+s",
+            "tls_record_sni" -> listOf("--tlsrec", "3+s")
+
+            // Compatibility-first automatic chain: no modification first, then progressively stronger groups.
+            "auto_compat" -> listOf(
+                "--auto=torst", "--split", "1+s",
+                "--auto=torst", "--split", "1+s", "--disorder", "3+s",
+                "--auto=ssl_err", "--tlsrec", "3+s",
                 "--auto=torst", "--disorder", "1",
             )
+
+            // Balanced default. Groups are cached by ciadpi per destination.
+            "auto", "auto_balanced" -> listOf(
+                "--split", "1+s", "--disorder", "3+s",
+                "--auto=torst", "--disorder", "1", "--fake", "-1",
+                "--auto=ssl_err", "--fake", "-1", "--ttl", ttl, "--fake-tls-mod", "rand",
+                "--auto=torst", "--tlsrec", "3+s",
+                "--auto=torst", "--oob", "3+s", "--oob-data", "a",
+                "--auto=torst", "--split", "0+sm",
+            )
+
+            // Stronger chain for networks that reset several normal desync variants.
+            "auto_aggressive" -> listOf(
+                "--disorder", "1", "--fake", "-1",
+                "--auto=torst", "--split", "1+s", "--disorder", "3+s", "--fake", "-1", "--ttl", ttl,
+                "--auto=ssl_err", "--fake", "-1", "--ttl", ttl, "--fake-tls-mod", "rand",
+                "--auto=torst", "--tlsrec", "3+s", "--disorder", "1",
+                "--auto=torst", "--disoob", "3+s", "--disorder", "1",
+                "--auto=torst", "--split", "1+s", "--split", "3+s", "--disorder", "5+s",
+            )
+
             else -> listOf("--split", pos)
         }
     }
