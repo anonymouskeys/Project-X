@@ -212,7 +212,7 @@
     <string name="summary_pref_append_http_proxy">HTTP-прокси будет использоваться напрямую (из браузера и других поддерживающих приложений), минуя виртуальный сетевой адаптер (Android 10+)</string>
 
     <string name="title_pref_feedback">Обратная связь</string>
-    <string name="summary_pref_feedback">Предложить улучшение или сообщить об ошибке на GitHub</string>
+    <string name="summary_pref_feedback">Связаться с поддержкой Anonymous Keys в Telegram</string>
     <string name="summary_pref_tg_group">Присоединиться к группе в Telegram</string>
     <string name="toast_tg_app_not_found">Приложение Telegram не найдено</string>
     <string name="title_privacy_policy">Политика конфиденциальности</string>

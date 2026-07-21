@@ -101,7 +101,7 @@ class AboutActivity : BaseActivity() {
         }
 
         binding.layoutFeedback.setOnClickListener {
-            Utils.openUri(this, AppConfig.v2rayNGIssues)
+            Utils.openUri(this, AppConfig.SupportUrl)
         }
 
         binding.layoutOssLicenses.setOnClickListener {
