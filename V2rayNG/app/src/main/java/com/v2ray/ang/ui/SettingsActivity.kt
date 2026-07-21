@@ -214,9 +214,9 @@ class SettingsActivity : BaseActivity() {
             delayTestUrl?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DELAY_TEST_URL, AppConfig.DelayTestUrl)
 
             dpiEnabled?.isChecked = MmkvManager.decodeSettingsBool(AppConfig.PREF_DPI_ENABLED, false)
-            dpiStrategy?.value = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_STRATEGY, "split")
-            dpiSplitPosition?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_SPLIT_POSITION, "1")
-            dpiFakeTtl?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_FAKE_TTL, "3")
+            dpiStrategy?.value = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_STRATEGY, "auto")
+            dpiSplitPosition?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_SPLIT_POSITION, "1+s")
+            dpiFakeTtl?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_FAKE_TTL, "8")
             dpiFakeCount?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_FAKE_COUNT, "1")
             dpiDelayMs?.summary = MmkvManager.decodeSettingsString(AppConfig.PREF_DPI_DELAY_MS, "0")
             dpiPortsOnly?.isChecked = MmkvManager.decodeSettingsBool(AppConfig.PREF_DPI_PORTS_80_443_ONLY, true)

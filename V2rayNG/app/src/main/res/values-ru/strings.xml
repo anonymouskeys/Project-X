@@ -349,19 +349,19 @@
 
     <string name="title_dpi_settings">Продвинутый обход DPI (экспериментально)</string>
     <string name="title_pref_dpi_enabled">Включить продвинутый DPI-слой</string>
-    <string name="summary_pref_dpi_enabled_scaffold">В этой сборке добавлена только инфраструктура. Настройка сохраняется, но пока не меняет трафик Xray.</string>
+    <string name="summary_pref_dpi_enabled_scaffold">Запускает нативный ByeDPI SOCKS-слой для соединения Xray с выбранным сервером. При ошибке безопасно возвращается к обычному Xray.</string>
     <string name="title_pref_dpi_strategy">Стратегия десинхронизации</string>
     <string name="title_pref_dpi_split_position">Позиция разделения</string>
-    <string name="summary_pref_dpi_split_position">Смещение в байтах; отрицательные значения будут считаться от границы имени хоста</string>
+    <string name="summary_pref_dpi_split_position">Синтаксис позиции ByeDPI: например 1+s, 3+s, -1 или 0+sm</string>
     <string name="title_pref_dpi_fake_ttl">TTL поддельного пакета</string>
-    <string name="summary_pref_dpi_fake_ttl">Ограничение числа переходов для будущего fake-пакета</string>
+    <string name="summary_pref_dpi_fake_ttl">TTL fake-пакетов. Обычный диапазон подбора: 3–12</string>
     <string name="title_pref_dpi_fake_count">Количество fake-пакетов</string>
-    <string name="summary_pref_dpi_fake_count">Число будущих поддельных пакетов</string>
+    <string name="summary_pref_dpi_fake_count">Количество повторов fake-операции: 1–8</string>
     <string name="title_pref_dpi_delay_ms">Задержка перед настоящими данными, мс</string>
     <string name="summary_pref_dpi_delay_ms">Ноль означает отсутствие искусственной задержки</string>
     <string name="title_pref_dpi_ports_only">Только порты 80 и 443</string>
-    <string name="summary_pref_dpi_ports_only">Не применять будущий DPI-слой к другим портам назначения</string>
+    <string name="summary_pref_dpi_ports_only">Применять десинхронизацию только к портам сервера 80 и 443</string>
     <string name="title_pref_dpi_expert_args">Экспертные аргументы</string>
-    <string name="summary_pref_dpi_expert_args">Зарезервировано для нативных аргументов ByeDPI; пока не активно</string>
+    <string name="summary_pref_dpi_expert_args">Дополнительные аргументы ciadpi после выбранного пресета</string>
 
 </resources>

@@ -38,6 +38,7 @@ import com.v2ray.ang.dto.NetworkType
 import com.v2ray.ang.dto.ProfileItem
 import com.v2ray.ang.dto.RulesetItem
 import com.v2ray.ang.dto.V2rayConfig
+import com.v2ray.ang.dpi.ByeDpiManager
 import com.v2ray.ang.dto.V2rayConfig.RoutingBean.RulesBean
 import com.v2ray.ang.extension.isNotNullEmpty
 import com.v2ray.ang.fmt.HttpFmt
@@ -190,7 +191,11 @@ object V2rayConfigManager {
             v2rayConfig.outbounds.add(outbound)
         }
 
-        updateOutboundFragment(v2rayConfig)
+        if (ByeDpiManager.isRunning()) {
+            updateOutboundByeDpi(v2rayConfig)
+        } else {
+            updateOutboundFragment(v2rayConfig)
+        }
         return Pair(true, config.getServerAddressAndPort())
     }
 
@@ -495,6 +500,35 @@ object V2rayConfigManager {
             return false
         }
         return true
+    }
+
+    private fun updateOutboundByeDpi(v2rayConfig: V2rayConfig): Boolean {
+        return try {
+            val primary = v2rayConfig.outbounds.firstOrNull() ?: return false
+            val dpiOutbound = V2rayConfig.OutboundBean(
+                protocol = EConfigType.SOCKS.name.lowercase(),
+                tag = AppConfig.TAG_BYEDPI,
+                mux = null,
+                settings = V2rayConfig.OutboundBean.OutSettingsBean(
+                    servers = listOf(
+                        V2rayConfig.OutboundBean.OutSettingsBean.ServersBean(
+                            address = AppConfig.LOOPBACK,
+                            port = AppConfig.PORT_BYEDPI
+                        )
+                    )
+                )
+            )
+            primary.proxySettings = V2rayConfig.OutboundBean.ProxySettingsBean(
+                tag = AppConfig.TAG_BYEDPI,
+                transportLayer = true
+            )
+            v2rayConfig.outbounds.removeAll { it.tag == AppConfig.TAG_BYEDPI }
+            v2rayConfig.outbounds.add(dpiOutbound)
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
 
     private fun updateOutboundFragment(v2rayConfig: V2rayConfig): Boolean {

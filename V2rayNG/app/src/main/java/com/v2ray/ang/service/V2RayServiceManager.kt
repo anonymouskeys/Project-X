@@ -22,6 +22,7 @@ import com.v2ray.ang.AppConfig.VPN
 import com.v2ray.ang.R
 import com.v2ray.ang.dto.EConfigType
 import com.v2ray.ang.dto.ProfileItem
+import com.v2ray.ang.dpi.ByeDpiManager
 import com.v2ray.ang.extension.toSpeedString
 import com.v2ray.ang.extension.toast
 import com.v2ray.ang.handler.MmkvManager
@@ -146,6 +147,10 @@ object V2RayServiceManager {
         if (v2rayPoint.isRunning) {
             return
         }
+        val dpiRequested = MmkvManager.decodeSettingsBool(AppConfig.PREF_DPI_ENABLED, false)
+        if (dpiRequested && !ByeDpiManager.start(service)) {
+            Log.w(ANG_PACKAGE, "ByeDPI unavailable; falling back to normal Xray path")
+        }
         val result = V2rayConfigManager.getV2rayConfig(service, guid)
         if (!result.status)
             return
@@ -202,6 +207,7 @@ object V2RayServiceManager {
         } catch (e: Exception) {
             Log.d(ANG_PACKAGE, e.toString())
         }
+        ByeDpiManager.stop()
         PluginUtil.stopPlugin()
     }
 

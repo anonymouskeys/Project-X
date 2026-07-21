@@ -71,10 +71,15 @@ data class V2rayConfig(
         var protocol: String,
         var settings: OutSettingsBean? = null,
         var streamSettings: StreamSettingsBean? = null,
-        val proxySettings: Any? = null,
+        var proxySettings: ProxySettingsBean? = null,
         val sendThrough: String? = null,
         var mux: MuxBean? = MuxBean(false)
     ) {
+        data class ProxySettingsBean(
+            val tag: String,
+            val transportLayer: Boolean = true
+        )
+
         companion object {
             fun create(configType: EConfigType): OutboundBean? {
                 return when (configType) {

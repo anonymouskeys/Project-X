@@ -50,6 +50,14 @@ jobs:
         env:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
+      - name: Build ByeDPI
+        run: |
+          bash compile-byedpi.sh
+          find V2rayNG/app/libs -name libciadpi.so -print
+          test -f V2rayNG/app/libs/arm64-v8a/libciadpi.so
+        env:
+          NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+
       - name: Setup Go
         uses: actions/setup-go@v5
         with:

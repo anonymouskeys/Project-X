@@ -158,7 +158,7 @@
             android:title="@string/title_pref_dpi_enabled" />
 
         <ListPreference
-            android:defaultValue="split"
+            android:defaultValue="auto"
             android:dependency="pref_dpi_enabled"
             android:entries="@array/dpi_strategy_entries"
             android:entryValues="@array/dpi_strategy_values"
@@ -167,15 +167,15 @@
             android:title="@string/title_pref_dpi_strategy" />
 
         <EditTextPreference
-            android:defaultValue="1"
+            android:defaultValue="1+s"
             android:dependency="pref_dpi_enabled"
-            android:inputType="numberSigned"
+            android:inputType="text"
             android:key="pref_dpi_split_position"
             android:summary="@string/summary_pref_dpi_split_position"
             android:title="@string/title_pref_dpi_split_position" />
 
         <EditTextPreference
-            android:defaultValue="3"
+            android:defaultValue="8"
             android:dependency="pref_dpi_enabled"
             android:inputType="number"
             android:key="pref_dpi_fake_ttl"
