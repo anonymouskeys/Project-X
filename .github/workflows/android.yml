@@ -5,6 +5,11 @@ on:
   push:
     branches:
       - main
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -145,3 +150,57 @@ jobs:
           path: V2rayNG/app/build/outputs/apk/fdroid/debug/Anonymous_keys_dpi.apk
           if-no-files-found: error
           retention-days: 30
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          APK="V2rayNG/app/build/outputs/apk/fdroid/debug/Anonymous_keys_dpi.apk"
+          TAG="${GITHUB_REF_NAME}"
+          TITLE="Anonymous Keys DPI ${TAG}"
+
+          test -f "$APK"
+
+          SHA256="$(sha256sum "$APK" | awk '{print $1}')"
+          printf '%s  %s\n' "$SHA256" "$(basename "$APK")" > "${APK}.sha256"
+
+          cat > "$RUNNER_TEMP/release-notes.md" <<EOF
+          # Anonymous Keys DPI ${TAG}
+
+          Official Anonymous Keys DPI release.
+
+          ## Highlights
+
+          - Complete Anonymous Keys branding
+          - Custom application signing certificate
+          - Built-in ByeDPI support
+          - Powered by Xray-core
+          - SOCKS chaining
+          - DPI bypass presets
+          - JSON configuration import
+          - Modern dark interface
+          - GitHub and Telegram integration
+
+          ## Download
+
+          - `Anonymous_keys_dpi.apk`
+          - `Anonymous_keys_dpi.apk.sha256`
+
+          ## Installation note
+
+          When upgrading from a build signed with another certificate, Android may
+          require uninstalling the previous version first. Export important
+          configurations before uninstalling.
+
+          SHA-256:
+
+          `${SHA256}`
+          EOF
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$APK" "${APK}.sha256" --clobber
+            gh release edit "$TAG" --title "$TITLE" --notes-file "$RUNNER_TEMP/release-notes.md" --latest
+          else
+            gh release create "$TAG" "$APK" "${APK}.sha256"               --title "$TITLE"               --notes-file "$RUNNER_TEMP/release-notes.md"               --latest               --verify-tag
+          fi
