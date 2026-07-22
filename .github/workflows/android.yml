@@ -95,7 +95,7 @@ jobs:
       - name: Upload F-Droid Universal APK
         uses: actions/upload-artifact@v4
         with:
-          name: AnonymousKeys-FDroid-Universal
-          path: V2rayNG/app/build/outputs/apk/fdroid/debug/*universal.apk
+          name: Anonymous_keys_dpi
+          path: V2rayNG/app/build/outputs/apk/fdroid/debug/Anonymous_keys_dpi.apk
           if-no-files-found: error
           retention-days: 30
