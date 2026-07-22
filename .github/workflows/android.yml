@@ -88,9 +88,55 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x V2rayNG/gradlew
 
-      - name: Build F-Droid Universal APK
+      - name: Validate Anonymous Keys signing secrets
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          missing=0
+          for name in ANDROID_KEYSTORE_BASE64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
+            if [ -z "${!name:-}" ]; then
+              echo "::error title=Missing signing secret::$name is not configured in repository Actions secrets."
+              missing=1
+            fi
+          done
+          test "$missing" -eq 0
+
+      - name: Restore Anonymous Keys keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          KEYSTORE_PATH="$RUNNER_TEMP/anonymous_keys_release.jks"
+          printf '%s' "$ANDROID_KEYSTORE_BASE64" | base64 --decode > "$KEYSTORE_PATH"
+          chmod 600 "$KEYSTORE_PATH"
+          test -s "$KEYSTORE_PATH"
+          echo "ANDROID_KEYSTORE_PATH=$KEYSTORE_PATH" >> "$GITHUB_ENV"
+
+      - name: Build signed F-Droid Universal APK
         working-directory: V2rayNG
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: ./gradlew assembleFdroidDebug
+
+      - name: Verify Anonymous Keys APK signature
+        env:
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+        run: |
+          APK="V2rayNG/app/build/outputs/apk/fdroid/debug/Anonymous_keys_dpi.apk"
+          test -f "$APK"
+          APKSIGNER="$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -n 1)"
+          test -n "$APKSIGNER"
+          "$APKSIGNER" verify --verbose --print-certs "$APK"
+          keytool -list             -keystore "$ANDROID_KEYSTORE_PATH"             -storepass "$ANDROID_KEYSTORE_PASSWORD"             -alias "$ANDROID_KEY_ALIAS" >/dev/null
+
+      - name: Remove temporary keystore
+        if: always()
+        run: rm -f "${ANDROID_KEYSTORE_PATH:-}"
 
       - name: Upload F-Droid Universal APK
         uses: actions/upload-artifact@v4

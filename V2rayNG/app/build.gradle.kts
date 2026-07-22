@@ -4,6 +4,17 @@ plugins {
     id("com.jaredsburrows.license")
 }
 
+val anonymousKeysStoreFile = System.getenv("ANDROID_KEYSTORE_PATH")
+val anonymousKeysStorePassword = System.getenv("ANDROID_KEYSTORE_PASSWORD")
+val anonymousKeysKeyAlias = System.getenv("ANDROID_KEY_ALIAS")
+val anonymousKeysKeyPassword = System.getenv("ANDROID_KEY_PASSWORD")
+
+val anonymousKeysSigningReady =
+    !anonymousKeysStoreFile.isNullOrBlank() &&
+        !anonymousKeysStorePassword.isNullOrBlank() &&
+        !anonymousKeysKeyAlias.isNullOrBlank() &&
+        !anonymousKeysKeyPassword.isNullOrBlank()
+
 android {
     namespace = "com.v2ray.ang"
     compileSdk = 35
@@ -26,9 +37,33 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        if (anonymousKeysSigningReady) {
+            create("anonymousKeys") {
+                storeFile = file(anonymousKeysStoreFile!!)
+                storePassword = anonymousKeysStorePassword
+                keyAlias = anonymousKeysKeyAlias
+                keyPassword = anonymousKeysKeyPassword
+                enableV1Signing = true
+                enableV2Signing = true
+                enableV3Signing = true
+                enableV4Signing = true
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            if (anonymousKeysSigningReady) {
+                signingConfig = signingConfigs.getByName("anonymousKeys")
+            }
+        }
+
         release {
             isMinifyEnabled = false
+            if (anonymousKeysSigningReady) {
+                signingConfig = signingConfigs.getByName("anonymousKeys")
+            }
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

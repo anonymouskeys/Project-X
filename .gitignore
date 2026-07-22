@@ -4,3 +4,7 @@ V2rayNG/app/release/output.json
 .idea/
 .gradle/
 *.so
+# Anonymous Keys signing material — never commit
+*.keystore
+*keystore*.base64*
+github-signing-secrets.env
