@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_widget_name">v2rayNG</string>
     <string name="app_tile_name">v2rayNG</string>
@@ -8,8 +8,6 @@
     <string name="migration_success">Успешный перенос данных!</string>
     <string name="migration_fail">Перенос данных не выполнен!</string>
     <string name="pull_down_to_refresh">Потяните вниз для обновления!</string>
-
-    <!-- Notifications -->
     <string name="notification_action_stop_v2ray">Остановить</string>
     <string name="toast_permission_denied">Разрешение не получено</string>
     <string name="toast_permission_denied_notification">Разрешение на отображение уведомлений не получено</string>
@@ -18,8 +16,6 @@
     <string name="toast_services_stop">Остановка служб</string>
     <string name="toast_services_success">Службы успешно запущены</string>
     <string name="toast_services_failure">Сбой при запуске служб</string>
-
-    <!--ServerActivity-->
     <string name="title_server">Профиль</string>
     <string name="menu_item_add_config">Добавить профиль</string>
     <string name="menu_item_save_config">Сохранить профиль</string>
@@ -123,8 +119,6 @@
     <string name="server_lab_bandwidth_up">Исходящая пропускная способность (единицы)</string>
     <string name="server_lab_xhttp_mode">Режим XHTTP</string>
     <string name="server_lab_xhttp_extra">Необработанный JSON XHTTP Extra, формат: { XHTTPObject }</string>
-
-    <!-- PerAppProxyActivity -->
     <string name="msg_dialog_progress">Загрузка…</string>
     <string name="menu_item_search">Поиск</string>
     <string name="menu_item_select_all">Выбрать все</string>
@@ -134,9 +128,6 @@
     <string name="msg_downloading_content">Загрузка данных</string>
     <string name="menu_item_export_proxy_app">Экспорт в буфер обмена</string>
     <string name="menu_item_import_proxy_app">Импорт из буфера обмена</string>
-
-
-    <!-- Preferences -->
     <string name="title_settings">Настройки</string>
     <string name="title_advanced">Расширенные настройки</string>
     <string name="title_vpn_settings">Настройки VPN</string>
@@ -144,7 +135,6 @@
     <string name="summary_pref_per_app_proxy">Основной: выделенное приложение соединяется через прокси, не выделенное — напрямую;\nРежим обхода: выделенное приложение соединяется напрямую, не выделенное — через прокси.\nЕсть возможность автоматического выбора проксируемых приложений в меню.</string>
     <string name="title_pref_is_booted">Автоподключение при запуске</string>
     <string name="summary_pref_is_booted">Автоматически подключаться к выбранному серверу при запуске приложения (может оказаться неудачным)</string>
-
     <string name="title_mux_settings">Настройки мультиплексирования</string>
     <string name="title_pref_mux_enabled">Использовать мультиплексирование</string>
     <string name="summary_pref_mux_enabled">Быстрее, но это может привести к нестабильному соединению.\nНиже можно настроить обработку TCP, UDP и QUIC.</string>
@@ -156,61 +146,43 @@
         <item>разрешать</item>
         <item>пропускать</item>
     </string-array>
-
     <string name="title_pref_speed_enabled">Отображение скорости</string>
     <string name="summary_pref_speed_enabled">Показывать текущую скорость в уведомлении.\nЗначок будет меняться в зависимости от использования.</string>
-
     <string name="title_pref_sniffing_enabled">Анализ пакетов</string>
     <string name="summary_pref_sniffing_enabled">Использовать определение доменных имён в пакетах (по умолчанию включено)</string>
     <string name="title_pref_route_only_enabled">Домен только для маршрутизации</string>
     <string name="summary_pref_route_only_enabled">Использовать доменное имя только для маршрутизации и сохранять целевой адрес в виде IP.</string>
-
     <string name="title_pref_local_dns_enabled">Использовать локальную DNS</string>
     <string name="summary_pref_local_dns_enabled">Обслуживание выполняется DNS-модулем ядра (в настройках маршрутизации рекомендуется выбрать режим «Все, кроме LAN и Китая»)</string>
-
     <string name="title_pref_fake_dns_enabled">Использовать поддельную DNS</string>
     <string name="summary_pref_fake_dns_enabled">Локальная DNS возвращает поддельный IP-адрес (быстрее, но может не работать с некоторыми приложениями)</string>
-
     <string name="title_pref_prefer_ipv6">Предпочитать IPv6</string>
     <string name="summary_pref_prefer_ipv6">Предпочитать IPv6-адреса и маршрутизацию</string>
-
     <string name="title_pref_remote_dns">Удалённая DNS (UDP/TCP/HTTPS/QUIC) (необязательно)</string>
     <string name="summary_pref_remote_dns">DNS</string>
-
     <string name="title_pref_vpn_dns">VPN DNS (только IPv4/v6)</string>
     <string name="title_pref_vpn_bypass_lan">VPN пропускает LAN</string>
-
     <string name="title_pref_domestic_dns">Внутренняя DNS (необязательно)</string>
     <string name="summary_pref_domestic_dns">DNS</string>
-
     <string name="title_pref_dns_hosts">Узлы DNS (формат: домен:адрес,…)</string>
     <string name="summary_pref_dns_hosts">домен:адрес,…</string>
-
     <string name="title_pref_delay_test_url">Сервис проверки времени отклика (HTTP/HTTPS)</string>
     <string name="summary_pref_delay_test_url">URL</string>
-
     <string name="title_pref_proxy_sharing_enabled">Разрешать подключения из LAN</string>
     <string name="summary_pref_proxy_sharing_enabled">Другие устройства могут подключаться, используя ваш IP-адрес, чтобы использовать локальный прокси. Используйте только в доверенной сети, чтобы избежать несанкционированного подключения.</string>
     <string name="toast_warning_pref_proxysharing_short">Доступ из LAN разрешён, убедитесь, что вы находитесь в доверенной сети</string>
-
     <string name="title_pref_allow_insecure">Разрешать небезопасные</string>
     <string name="summary_pref_allow_insecure">Для TLS по умолчанию разрешены небезопасные соединения</string>
-
     <string name="title_pref_socks_port">Порт локального прокси</string>
     <string name="summary_pref_socks_port">Порт локального прокси</string>
-
     <string name="title_pref_local_dns_port">Порт локальной DNS</string>
     <string name="summary_pref_local_dns_port">Порт локальной DNS</string>
-
     <string name="title_pref_confirm_remove">Подтверждение удаления профиля</string>
     <string name="summary_pref_confirm_remove">Требовать двойное подтверждение удаления профиля</string>
-
     <string name="title_pref_start_scan_immediate">Сканирование при запуске</string>
     <string name="summary_pref_start_scan_immediate">Начинать сканирование сразу при запуске приложения или запускать функцию сканирования камерой или из изображения через панель инструментов</string>
-
     <string name="title_pref_append_http_proxy">Дополнительный HTTP-прокси</string>
     <string name="summary_pref_append_http_proxy">HTTP-прокси будет использоваться напрямую (из браузера и других поддерживающих приложений), минуя виртуальный сетевой адаптер (Android 10+)</string>
-
     <string name="title_pref_feedback">Обратная связь</string>
     <string name="summary_pref_feedback">Связаться с поддержкой Anonymous Keys в Telegram</string>
     <string name="summary_pref_tg_group">Присоединиться к группе в Telegram</string>
@@ -224,21 +196,17 @@
     <string name="summary_configuration_backup">Путь: [%s]. Резервная копия будет стёрта при удалении приложения или очистке хранилища.</string>
     <string name="title_configuration_restore">Восстановление конфигурации</string>
     <string name="title_configuration_share">Поделиться конфигурацией</string>
-
-    <string name="title_pref_promotion">Содействие</string>
+    <string name="title_pref_promotion">GitHub</string>
     <string name="summary_pref_promotion">Содействие, нажмите для получения подробной информации (пожертвование может быть удалено)</string>
-
     <string name="title_pref_auto_update_subscription">Автоматическое обновление подписок</string>
     <string name="summary_pref_auto_update_subscription">Автоматическое обновление подписок в фоновом режиме с указанным интервалом. В зависимости от устройства эта функция может работать не всегда.</string>
     <string name="title_pref_auto_update_interval">Интервал автообновления (минут, не менее 15)</string>
-
     <string name="title_core_loglevel">Подробность ведения журнала</string>
     <string name="title_mode">Режим</string>
     <string name="title_mode_help">Нажмите для получения дополнительной информации</string>
     <string name="title_language">Язык</string>
     <string name="title_ui_settings">Настройки интерфейса</string>
     <string name="title_pref_ui_mode_night">Тема интерфейса</string>
-
     <string name="title_logcat">Журнал</string>
     <string name="logcat_copy">Копировать</string>
     <string name="logcat_clear">Очистить</string>
@@ -268,10 +236,8 @@
     <string name="title_import_config_count">Импортировано профилей: %d</string>
     <string name="title_export_config_count">Экспортировано профилей: %d</string>
     <string name="title_update_config_count">Обновлено профилей: %d</string>
-
     <string name="tasker_start_service">Запуск службы</string>
     <string name="tasker_setting_confirm">Подтвердить</string>
-
     <string name="routing_settings_domain_strategy">Доменная стратегия</string>
     <string name="routing_settings_title">Маршрутизация</string>
     <string name="routing_settings_tips">Введите требуемые домены/IP через запятую</string>
@@ -293,7 +259,6 @@
     <string name="routing_settings_network">Сеть</string>
     <string name="routing_settings_network_tip">[udp|tcp]</string>
     <string name="routing_settings_outbound_tag">Исходящее подключение</string>
-
     <string name="connection_test_pending">Проверить подключение</string>
     <string name="connection_test_testing">Проверка…</string>
     <string name="connection_test_testing_count">Проверка профилей: %d</string>
@@ -303,7 +268,6 @@
     <string name="connection_test_error_status_code">Код ошибки: #%d</string>
     <string name="connection_connected">Подключено, нажмите для проверки</string>
     <string name="connection_not_connected">Не подключено</string>
-
     <string name="import_subscription_success">Подписка импортирована</string>
     <string name="import_subscription_failure">Невозможно импортировать подписку</string>
     <string name="title_fragment_settings">Настройки фрагментирования</string>
@@ -311,42 +275,35 @@
     <string name="title_pref_fragment_length">Длина фрагмента (от - до)</string>
     <string name="title_pref_fragment_interval">Интервал фрагментов (от - до)</string>
     <string name="title_pref_fragment_enabled">Использовать фрагментирование</string>
-
     <string-array name="share_method">
         <item>QR-код</item>
         <item>Экспорт в буфер обмена</item>
         <item>Экспорт всей конфигурации в буфер обмена</item>
     </string-array>
-
     <string-array name="share_sub_method">
         <item>QR-код</item>
         <item>Экспорт в буфер обмена</item>
     </string-array>
-
     <string-array name="mode_entries">
         <item>VPN</item>
         <item>Прокси</item>
     </string-array>
-
     <string-array name="ui_mode_night">
         <item>Как в системе</item>
         <item>Светлая</item>
         <item>Тёмная</item>
     </string-array>
-
     <string-array name="preset_rulesets">
         <item>Белый список Китая</item>
         <item>Чёрный список Китая</item>
         <item>Общие</item>
         <item>Белый список Ирана</item>
     </string-array>
-
     <string-array name="vpn_bypass_lan">
         <item>Как в профиле</item>
         <item>Пропускает</item>
         <item>Не пропускает</item>
     </string-array>
-
     <string name="title_dpi_settings">Продвинутый обход DPI (экспериментально)</string>
     <string name="title_pref_dpi_enabled">Включить продвинутый DPI-слой</string>
     <string name="summary_pref_dpi_enabled_scaffold">Запускает нативный ByeDPI SOCKS-слой для соединения Xray с выбранным сервером. Автоматические профили перебирают всё более сильные штатные стратегии, а ciadpi запоминает рабочую группу для адреса.</string>
@@ -363,8 +320,8 @@
     <string name="summary_pref_dpi_ports_only">Применять десинхронизацию только к портам сервера 80 и 443</string>
     <string name="title_pref_dpi_expert_args">Экспертные аргументы</string>
     <string name="summary_pref_dpi_expert_args">Дополнительные аргументы ciadpi после выбранного пресета</string>
-
     <string name="main_dpi_switch">DPI</string>
     <string name="main_dpi_switch_description">Включить или выключить обход DPI</string>
     <string name="main_dpi_restart_hint">Режим DPI применится при следующем подключении</string>
+    <string name="menu_telegram_anonymous_keys">Telegram</string>
 </resources>

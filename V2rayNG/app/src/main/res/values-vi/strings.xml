@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_widget_name">Kết nối ngay</string>
     <string name="app_tile_name">Kết nối ngay</string>
@@ -8,8 +8,6 @@
     <string name="migration_success">Đã chuyển dữ liệu!</string>
     <string name="migration_fail">Không thể chuyển dữ liệu!</string>
     <string name="pull_down_to_refresh">Please pull down to refresh!</string>
-
-    <!-- Notifications -->
     <string name="notification_action_stop_v2ray">Ngắt kết nối v2rayNG</string>
     <string name="toast_permission_denied">Vui lòng cấp quyền cần thiết cho v2rayNG! Bạn đã từ chối các quyền cần thiết như Camera hay Bộ nhớ?</string>
     <string name="toast_permission_denied_notification">Unable to obtain the notification permission</string>
@@ -18,8 +16,6 @@
     <string name="toast_services_stop">Đã dừng v2rayNG!</string>
     <string name="toast_services_success">Đã khởi động v2rayNG!</string>
     <string name="toast_services_failure">Không thể khởi động v2rayNG, kiểm tra lại cấu hình!</string>
-
-    <!--ServerActivity-->
     <string name="title_server">v2rayNG</string>
     <string name="menu_item_add_config">Thêm cấu hình</string>
     <string name="menu_item_save_config">Lưu cấu hình</string>
@@ -118,8 +114,6 @@
     <string name="server_lab_bandwidth_up">Bandwidth up (units)</string>
     <string name="server_lab_xhttp_mode">XHTTP Mode</string>
     <string name="server_lab_xhttp_extra">XHTTP Extra raw JSON, format: { XHTTPObject }</string>
-
-    <!-- PerAppProxyActivity -->
     <string name="title_user_asset_add_url">Thêm URL nội dung</string>
     <string name="msg_file_not_found">Không tìm thấy tập tin!</string>
     <string name="msg_remark_is_duplicate">Nhận xét đã tồn tại!</string>
@@ -132,9 +126,6 @@
     <string name="msg_downloading_content">Đang tải xuống nội dung...</string>
     <string name="menu_item_export_proxy_app">Xuất và Sao chép</string>
     <string name="menu_item_import_proxy_app">Nhập từ Clipboard</string>
-
-
-    <!-- Preferences -->
     <string name="title_settings">Cài đặt</string>
     <string name="title_advanced">Cài đặt nâng cao</string>
     <string name="title_vpn_settings">Cài đặt VPN</string>
@@ -142,7 +133,6 @@
     <string name="summary_pref_per_app_proxy">- Bình thường: Ứng dụng đã chọn sẽ kết nối thông qua Proxy, chưa chọn sẽ kết nối trực tiếp. \n- Chế độ Bypass: Ứng dụng đã chọn sẽ kết nối trực tiếp, chưa chọn sẽ kết nối qua Proxy. \n- Nếu bạn đang ở Trung Quốc thì vào Menu, chọn Tự động chọn ứng dụng Proxy.</string>
     <string name="title_pref_is_booted">Auto connect at startup</string>
     <string name="summary_pref_is_booted">Automatically connects to the selected server at startup, which may be unsuccessful</string>
-
     <string name="title_mux_settings">Cài đặt Mux</string>
     <string name="title_pref_mux_enabled">Bật Mux</string>
     <string name="summary_pref_mux_enabled">Giảm độ trễ nhưng có thể làm gián đoạn luồng, vì vậy không nên kích hoạt nó. \nCác phương pháp xử lý lưu lượng truy cập TCP, UDP và QUIC có sẵn bên dưới.</string>
@@ -154,68 +144,47 @@
         <item>Cho phép</item>
         <item>Bỏ qua</item>
     </string-array>
-
-
     <string name="title_pref_speed_enabled">Hiển thị tốc độ mạng</string>
     <string name="summary_pref_speed_enabled">Hiển thị tốc độ mạng hiện tại trên thanh thông báo. \nBiểu tượng trên thanh trạng thái có thể thay đổi tùy vào mức sử dụng.</string>
-
     <string name="title_pref_sniffing_enabled">Bật Sniffing</string>
     <string name="summary_pref_sniffing_enabled">Phát hiện tên miền từ lưu lượng truy cập (Được bật theo mặc định). \nỞ Việt Nam: tắt để sử dụng Zalo.</string>
     <string name="title_pref_route_only_enabled">Bật RouteOnly</string>
     <string name="summary_pref_route_only_enabled">Chỉ sử dụng tên miền được đánh dấu để định tuyến và giữ địa chỉ đích làm địa chỉ IP.</string>
-
-
     <string name="title_pref_local_dns_enabled">Bật Local DNS</string>
     <string name="summary_pref_local_dns_enabled">DNS được xử lý bởi module DNS của Xray-Core (Dùng nếu cần định tuyến Bypass cho mạng LAN và Địa chỉ nội địa).</string>
-
     <string name="title_pref_fake_dns_enabled">Bật FakeDNS</string>
     <string name="summary_pref_fake_dns_enabled">FakeDNS lấy tên miền mục tiêu bằng cách giả mạo DNS (Nhanh hơn, nhưng có thể không hoạt động cho một số ứng dụng).</string>
-
     <string name="title_pref_prefer_ipv6">Ưu tiên IPv6</string>
     <string name="summary_pref_prefer_ipv6">Ưu tiên sử dụng địa chỉ IPv6 cho kết nối và định tuyến.</string>
-
     <string name="title_pref_remote_dns">DNS ngoại quốc (UDP / TCP / HTTPS / QUIC) (Không bắt buộc)</string>
     <string name="summary_pref_remote_dns">DNS</string>
-
     <string name="title_pref_vpn_dns">VPN DNS (Chỉ IPv4 / IPv6)</string>
     <string name="title_pref_vpn_bypass_lan">Does VPN bypass LAN</string>
-
     <string name="title_pref_domestic_dns">DNS nội địa (Không bắt buộc)</string>
     <string name="summary_pref_domestic_dns">DNS</string>
-
     <string name="title_pref_dns_hosts">DNS hosts (Format: domain:address,…)</string>
     <string name="summary_pref_dns_hosts">domain:address,…</string>
-
     <string name="title_pref_delay_test_url">URL kiểm tra độ trễ thực (HTTP / HTTPS)</string>
     <string name="summary_pref_delay_test_url">URL</string>
-
     <string name="title_pref_proxy_sharing_enabled">Cho phép kết nối từ mạng LAN</string>
     <string name="summary_pref_proxy_sharing_enabled">Các thiết bị khác trong cùng mạng LAN có thể kết nối đến SOCKS / HTTP proxy trên thiết bị của bạn. \nChỉ bật tính năng này trong các mạng đáng tin cậy để tránh kết nối trái phép.</string>
     <string name="toast_warning_pref_proxysharing_short">Đang bật cho phép kết nối từ mạng LAN</string>
-
     <string name="title_pref_allow_insecure">Bỏ qua xác minh chứng chỉ</string>
     <string name="summary_pref_allow_insecure">Khi nhập những cấu hình có bảo mật TLS, mặc định sẽ không xác minh chứng chỉ.</string>
-
     <string name="title_pref_socks_port">Cổng Proxy Local</string>
     <string name="summary_pref_socks_port">Cổng Proxy Local</string>
-
     <string name="title_pref_local_dns_port">Cổng Local DNS</string>
     <string name="summary_pref_local_dns_port">Cổng Local DNS</string>
-
     <string name="title_pref_confirm_remove">Xác nhận xóa tệp cấu hình</string>
     <string name="summary_pref_confirm_remove">Yêu cầu xác nhận từ người dùng khi thực hiện xóa tệp cấu hình.</string>
-
     <string name="title_pref_start_scan_immediate">Quét mã QR ngay lập tức</string>
     <string name="summary_pref_start_scan_immediate">Mở camera để quét mã QR ngay khi khởi động, nếu không, bạn cũng có thể chọn quét mã hoặc chọn ảnh từ thanh công cụ.</string>
-
     <string name="title_pref_append_http_proxy">Append HTTP Proxy to VPN</string>
     <string name="summary_pref_append_http_proxy">HTTP proxy will be used directly from (browser/ some supported apps), without going through the virtual NIC device (Android 10+)</string>
-
     <string name="title_pref_feedback">Phản hồi lỗi</string>
     <string name="summary_pref_feedback">Phản hồi cải tiến hoặc lỗi lên GitHub</string>
     <string name="summary_pref_tg_group">Tham gia nhóm Telegram</string>
     <string name="toast_tg_app_not_found">Không tìm thấy ứng dụng Telegram!</string>
-
     <string name="title_privacy_policy">Chính sách bảo mật</string>
     <string name="title_about">Giới thiệu</string>
     <string name="title_source_code">Mã nguồn</string>
@@ -225,20 +194,17 @@
     <string name="summary_configuration_backup">Nơi lưu trữ: [%s], bản backup sẽ được dọn dẹp sau khi xóa ứng dụng hoặc xóa bộ nhớ.</string>
     <string name="title_configuration_restore">Khôi phục cấu hình</string>
     <string name="title_configuration_share">Chia sẻ cấu hình</string>
-    <string name="title_pref_promotion">Quảng bá server</string>
+    <string name="title_pref_promotion">GitHub</string>
     <string name="summary_pref_promotion">Quảng cáo, nhấn để biết thêm (Ủng hộ có thể được gỡ bỏ)</string>
-
     <string name="title_pref_auto_update_subscription">Tự động cập nhật các gói đăng ký</string>
     <string name="summary_pref_auto_update_subscription">Tự động cập nhật các gói đăng ký của bạn ở trong nền với khoảng thời gian cố định. Tùy thiết bị, tính năng này có thể không luôn hoạt động đúng như mong đợi.</string>
     <string name="title_pref_auto_update_interval">Thời gian cập nhật tự động (Phút, giá trị tối thiểu là 15)</string>
-
     <string name="title_core_loglevel">Cấp độ nhật ký</string>
     <string name="title_mode">Chế độ kết nối</string>
     <string name="title_mode_help">Nhấn vào đây nếu bạn cần trợ giúp!</string>
     <string name="title_language">Ngôn ngữ</string>
     <string name="title_ui_settings">Cài đặt UI</string>
     <string name="title_pref_ui_mode_night">Cài đặt chế độ UI</string>
-
     <string name="title_logcat">Logcat</string>
     <string name="logcat_copy">Sao chép</string>
     <string name="logcat_clear">Xoá</string>
@@ -264,14 +230,12 @@
     <string name="title_filter_config">Lọc cấu hình theo các gói đăng ký</string>
     <string name="filter_config_all">Hiển thị tất cả các gói đăng ký</string>
     <string name="title_del_duplicate_config_count">Xoá %d cấu hình trùng lặp</string>
-
     <string name="title_del_config_count">Delete %d configurations</string>
     <string name="title_import_config_count">Import %d configurations</string>
     <string name="title_export_config_count">Export %d configurations</string>
     <string name="title_update_config_count">Update %d configurations</string>
     <string name="tasker_start_service">Khởi động v2rayNG</string>
     <string name="tasker_setting_confirm">Xác nhận</string>
-
     <string name="routing_settings_domain_strategy">Chiến lược tên miền (DomainStrategy)</string>
     <string name="routing_settings_title">Cài đặt định tuyến</string>
     <string name="routing_settings_tips">Phân cách bằng dấu phẩy (,). Có thể tải xuống Rules mặc định để tham khảo ở menu ba chấm.</string>
@@ -285,7 +249,6 @@
     <string name="routing_settings_import_rulesets_from_qrcode">Nhập bộ quy tắc từ QRcode</string>
     <string name="routing_settings_export_rulesets_to_clipboard">Export ruleset to clipboard</string>
     <string name="routing_settings_locked">Locked, keep this rule when import presets</string>
-
     <string name="connection_test_pending">Kiểm tra kết nối</string>
     <string name="connection_test_testing">Đang kiểm tra kết nối mạng...</string>
     <string name="connection_test_testing_count">Testing %d configurations…</string>
@@ -295,28 +258,23 @@
     <string name="connection_test_error_status_code">Mã lỗi: #%d</string>
     <string name="connection_connected">Đã kết nối, nhấn để kiểm tra kết nối mạng!</string>
     <string name="connection_not_connected">Chưa kết nối</string>
-
     <string name="import_subscription_success">Nhập gói đăng ký thành công!</string>
     <string name="import_subscription_failure">Nhập gói đăng ký không thành công!</string>
-
     <string-array name="share_method">
         <item>Xuất ra mã QR (Chụp màn hình để lưu)</item>
         <item>Sao chép vào Clipboard</item>
         <item>Sao chép thành cấu hình tùy chỉnh</item>
     </string-array>
-
     <string-array name="share_sub_method">
         <item>Xuất gói ra mã QR (Chụp màn hình để lưu)</item>
         <item>Xuất gói vào Clipboard</item>
     </string-array>
-
     <string-array name="mode_entries">
         <item>Chế độ VPN</item>
         <item>Chế độ Proxy</item>
     </string-array>
     <string name="menu_item_add_asset">Thêm vào</string>
     <string name="menu_item_add_url">Thêm liên kết</string>
-
     <string-array name="ui_mode_night">
         <item>Theo hệ thống</item>
         <item>Sáng</item>
@@ -327,11 +285,10 @@
     <string name="title_pref_fragment_length">Fragment Length (min-max)</string>
     <string name="title_pref_fragment_interval">Fragment Interval (min-max)</string>
     <string name="title_pref_fragment_enabled">Enable Fragment</string>
-
     <string-array name="vpn_bypass_lan">
         <item>Follow config</item>
         <item>Bypass</item>
         <item>Not Bypass</item>
     </string-array>
-
+    <string name="menu_telegram_anonymous_keys">Telegram</string>
 </resources>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_name">Anonymous Keys</string>
     <string name="app_widget_name">تعویض</string>
@@ -9,8 +9,6 @@
     <string name="migration_success">موفقیت در انتقال داده</string>
     <string name="migration_fail">انتقال داده انجام نشد!</string>
     <string name="pull_down_to_refresh">لطفاً برای تازه کردن، پایین بکشید!</string>
-
-    <!-- Notifications -->
     <string name="notification_action_stop_v2ray">توقف</string>
     <string name="toast_permission_denied">دریافت مجوز امکان پذیر نیست</string>
     <string name="toast_permission_denied_notification">دریافت مجوز اعلان امکان پذیر نیست</string>
@@ -19,8 +17,6 @@
     <string name="toast_services_stop">توقف خدمات</string>
     <string name="toast_services_success">شروع خدمات با موفقیت انجام شد</string>
     <string name="toast_services_failure">شروع خدمات با موفقیت انجام نشد!</string>
-
-    <!--ServerActivity-->
     <string name="title_server">فایل کانفیگ</string>
     <string name="menu_item_add_config">افزودن کانفیگ</string>
     <string name="menu_item_save_config">ذخیره کانفیگ</string>
@@ -119,8 +115,6 @@
     <string name="server_lab_bandwidth_up">افزایش پهنای باند (واحد)</string>
     <string name="server_lab_xhttp_mode">حالت XHTTP</string>
     <string name="server_lab_xhttp_extra">خام JSON XHTTP Extra، قالب: { XHTTPObject }</string>
-
-    <!-- PerAppProxyActivity -->
     <string name="title_user_asset_add_url">آدرس اینترنتی را اضافه کنید</string>
     <string name="msg_file_not_found">فایل پیدا نشد</string>
     <string name="msg_remark_is_duplicate">نام قبلاً وجود دارد</string>
@@ -133,8 +127,6 @@
     <string name="msg_downloading_content">در حال دانلود محتوا</string>
     <string name="menu_item_export_proxy_app">خروجی گرفتن در کلیپ‌ بورد</string>
     <string name="menu_item_import_proxy_app">وارد کردن از کلیپ‌ بورد</string>
-
-    <!-- Preferences -->
     <string name="title_settings">تنظیمات</string>
     <string name="title_advanced">تنظیمات پیشرفته</string>
     <string name="title_vpn_settings">تنظیمات VPN</string>
@@ -142,7 +134,6 @@
     <string name="summary_pref_per_app_proxy">عمومی: برنامه بررسی شده پروکسی است، اتصال مستقیم بدون بررسی است. \nحالت دور زدن: برنامه بررسی شده مستقیما متصل است، پراکسی بررسی نشده است. \nگزینه‌ای برای انتخاب خودکار پروکسی برنامه در منو است.</string>
     <string name="title_pref_is_booted">اتصال خودکار هنگام راه اندازی</string>
     <string name="summary_pref_is_booted">هنگام راه اندازی به طور خودکار به سرور انتخابی متصل می شود که ممکن است ناموفق باشد.</string>
-
     <string name="title_mux_settings">تنظیمات MUX</string>
     <string name="title_pref_mux_enabled">فعال کردن MUX</string>
     <string name="summary_pref_mux_enabled">سریعتر است، اما ممکن است باعث اتصال ناپایدار شود\nمخزن ترافیک TCP با 8 اتصال پیش‌فرض، نحوه مدیریت UDP و QUIC را در زیر سفارشی کنید.</string>
@@ -154,67 +145,47 @@
         <item>مجاز</item>
         <item>پریدن</item>
     </string-array>
-
     <string name="title_pref_speed_enabled">فعال کردن نمایش سرعت</string>
     <string name="summary_pref_speed_enabled">نمایش سرعت فعلی در قسمت اعلان. \nآیکون اعلان بر اساس استفاده تغییر می‌کند.</string>
-
     <string name="title_pref_sniffing_enabled">فعال کردن تجزیه و تحلیل بسته ها (Sniffing)</string>
     <string name="summary_pref_sniffing_enabled">استفاده از تشخیص نام دامنه (Sniff) در بسته ها (به طور پیش فرض فعال است)</string>
     <string name="title_pref_route_only_enabled">فعال کردن دامنه فقط مسیر یابی (RouteOnly)</string>
     <string name="summary_pref_route_only_enabled">از نام دامنه (Snnifed) فقط برای مسیریابی استفاده کنید و آدرس مقصد را به عنوان IP ذخیره کنید.</string>
-
-
     <string name="title_pref_local_dns_enabled">فعال کردن DNS محلی</string>
     <string name="summary_pref_local_dns_enabled">درخواست های DNS به هسته وارد شده و توسط ماژول DNS پردازش می شوند (توصیه می شود در صورت نیاز به مسیریابی برای دور زدن آدرس های LAN و سرزمین اصلی فعال شود)</string>
-
     <string name="title_pref_fake_dns_enabled">فعال کردن DNS جعلی</string>
     <string name="summary_pref_fake_dns_enabled">دی ان اس محلی آدرس های آیپی جعلی را بر می گرداند (سریع تر می باشد و تاخیر را کاهش می دهد اما ممکن است برای برخی از برنامه ها کار نکند)</string>
-
     <string name="title_pref_prefer_ipv6">ترجیح دادن IPV6</string>
     <string name="summary_pref_prefer_ipv6">ترجیح دادن نشانی و مسیر های IPv6</string>
-
     <string name="title_pref_remote_dns">DNS از راه دور (اختیاری) (udp/tcp/https/quic)</string>
     <string name="summary_pref_remote_dns">DNS</string>
-
     <string name="title_pref_vpn_dns">VPN DNS (فقط IPv4/v6)</string>
     <string name="title_pref_vpn_bypass_lan">آیا VPN از شبکه محلی عبور می کند؟</string>
-
     <string name="title_pref_domestic_dns">DNS داخلی (اختیاری)</string>
     <string name="summary_pref_domestic_dns">DNS</string>
-
     <string name="title_pref_dns_hosts">DNS مستقیم هاست (فرمت: دامنه:آدرس،…)</string>
     <string name="summary_pref_dns_hosts">دامنه:آدرس،…</string>
-
     <string name="title_pref_delay_test_url">آدرس اینترنتی آزمایش تاخیر واقعی کانفیگ ها (HTTP/HTTPS)</string>
     <string name="summary_pref_delay_test_url">URL</string>
-
     <string name="title_pref_proxy_sharing_enabled">اجازه اتصالات از طریق شبکه محلی</string>
     <string name="summary_pref_proxy_sharing_enabled">سایر دستگاه ها می توانند با استفاده از آدرس آیپی شما برای استفاده از یک پروکسی محلی متصل شوند. فقط در یک شبکه قابل اعتماد برای جلوگیری از اتصالات غیرمجاز استفاده کنید.</string>
     <string name="toast_warning_pref_proxysharing_short">اتصالات از طریق شبکه محلی را مجاز کنید، مطمئن شوید که در یک شبکه قابل اعتماد هستید.</string>
-
     <string name="title_pref_allow_insecure">اعطای مجوز ناامن</string>
     <string name="summary_pref_allow_insecure">هنگام استفاده از TLS، به طور پیش‌ فرض مجوز ناامن فعال است.</string>
-
     <string name="title_pref_socks_port">پورت پروکسی محلی</string>
     <string name="summary_pref_socks_port">پورت پروکسی محلی</string>
-
     <string name="title_pref_local_dns_port">پورت DNS محلی</string>
     <string name="summary_pref_local_dns_port">پورت DNS محلی</string>
-
     <string name="title_pref_confirm_remove">تایید حذف فایل کانفیگ</string>
     <string name="summary_pref_confirm_remove">آیا برای حذف فایل کانفیگ نیاز به تایید دوم توسط کاربر است</string>
-
     <string name="title_pref_start_scan_immediate">فورا اسکن را شروع کن</string>
     <string name="summary_pref_start_scan_immediate">دوربین را برای اسکن بلافاصله در هنگام راه اندازی باز کنید، در غیر این صورت می توانید کد را اسکن کنید یا عکسی را در نوار ابزار انتخاب کنید.</string>
-
     <string name="title_pref_append_http_proxy">پروکسی HTTP را به VPN اضافه کنید</string>
     <string name="summary_pref_append_http_proxy">پروکسی HTTP مستقیماً از (مرورگر/برخی برنامه‌های پشتیبانی‌شده)، بدون استفاده از دستگاه NIC مجازی (Android 10+) استفاده می‌شود.</string>
-
     <string name="title_pref_feedback">بازخورد</string>
     <string name="summary_pref_feedback">بازخورد یا گزارش اشکالات در گیت‌ هاب</string>
     <string name="summary_pref_tg_group">عضویت در گروه تلگرام</string>
     <string name="toast_tg_app_not_found">برنامه تلگرام پیدا نشد</string>
-
     <string name="title_privacy_policy">حریم خصوصی</string>
     <string name="title_about">درباره</string>
     <string name="title_source_code">کد منبع</string>
@@ -224,9 +195,8 @@
     <string name="summary_configuration_backup">محل ذخیره سازی: [%s], پس از حذف نصب برنامه یا پاک کردن فضای ذخیره سازی، نسخه پشتیبان پاک می شود</string>
     <string name="title_configuration_restore">بازیابی پیکربندی</string>
     <string name="title_configuration_share">اشتراک گذاری پیکربندی</string>
-    <string name="title_pref_promotion">تبلیغات</string>
+    <string name="title_pref_promotion">GitHub</string>
     <string name="summary_pref_promotion">تبلیغات، برای جزئیات بیشتر کلیک کنید (کمک مالی کنید تا حذف شود)</string>
-
     <string name="title_pref_auto_update_subscription">به‌ روزرسانی خودکار اشتراک ها</string>
     <string name="summary_pref_auto_update_subscription">اشتراک های خود را به طور خودکار با فاصله زمانی در پس زمینه به روز کنید. بسته به دستگاه، این ویژگی ممکن است همیشه کار نکند.</string>
     <string name="title_pref_auto_update_interval">فاصله به‌ روزرسانی خودکار ( حداقل مقدار ، 15 دقیقه )</string>
@@ -234,9 +204,8 @@
     <string name="title_mode">حالت</string>
     <string name="title_mode_help">برای اطلاعات و راهنمایی بیشتر، روی این متن کلیک کنید</string>
     <string name="title_language">زبان</string>
-    <string name="title_ui_settings">تنظیمات رابط کاربری</string> 
+    <string name="title_ui_settings">تنظیمات رابط کاربری</string>
     <string name="title_pref_ui_mode_night">تنظیمات حالت رابط کاربری</string>
-
     <string name="title_logcat">گزارشات</string>
     <string name="logcat_copy">کپی</string>
     <string name="logcat_clear">پاک کردن</string>
@@ -262,14 +231,12 @@
     <string name="title_filter_config">فیلتر کردن کانفیگ‌ها</string>
     <string name="filter_config_all">همه گروه‌های اشتراک</string>
     <string name="title_del_duplicate_config_count">حذف %d کانفیگ تکراری</string>
-
     <string name="title_del_config_count">حذف %d کانفیگ</string>
     <string name="title_import_config_count">وارد کردن %d کانفیگ</string>
     <string name="title_export_config_count">صادر کردن %d کانفیگ</string>
     <string name="title_update_config_count">آپدیت کردن %d کانفیگ</string>
     <string name="tasker_start_service">شروع خدمات</string>
     <string name="tasker_setting_confirm">تایید</string>
-
     <string name="routing_settings_domain_strategy">استراتژی دامنه</string>
     <string name="routing_settings_title">تنظیمات مسیریابی</string>
     <string name="routing_settings_tips">با کاما (،) از هم جدا شوند، ذخیره کردن فراموش نشود</string>
@@ -291,7 +258,6 @@
     <string name="routing_settings_network">شبکه</string>
     <string name="routing_settings_network_tip">[udp|tcp]</string>
     <string name="routing_settings_outbound_tag">برچسب خروجی</string>
-
     <string name="connection_test_pending">اتصال را بررسی کنید</string>
     <string name="connection_test_testing">در حال آزمایش...</string>
     <string name="connection_test_testing_count">تست کردن %d کانفیگ…</string>
@@ -301,7 +267,6 @@
     <string name="connection_test_error_status_code">کد خطا: #%d</string>
     <string name="connection_connected">متصل است، برای بررسی اتصال ضربه بزنید</string>
     <string name="connection_not_connected">متصل نیست</string>
-
     <string name="import_subscription_success">اشتراک با موفقیت ذخیره شد</string>
     <string name="import_subscription_failure">ذخیره اشتراک ناموفق بود</string>
     <string name="title_fragment_settings">تنظیمات فرگمنت</string>
@@ -314,36 +279,31 @@
         <item>خروجی گرفتن در کلیپ‌ بورد</item>
         <item>خروجی گرفتن کانفیگ کامل در کلیپ بورد</item>
     </string-array>
-
     <string-array name="share_sub_method">
         <item>QRcode</item>
         <item>خروجی گرفتن در کلیپ‌ بورد</item>
     </string-array>
-
     <string-array name="mode_entries">
         <item>VPN</item>
         <item>فقط پروکسی</item>
     </string-array>
     <string name="menu_item_add_asset">افزودن منبع</string>
     <string name="menu_item_add_url">افزودن لینک</string>
-
     <string-array name="ui_mode_night">
         <item>پیش فرض سیستم</item>
         <item>روشن</item>
         <item>تاریک</item>
     </string-array>
-
     <string-array name="preset_rulesets">
         <item>لیست سفید چین</item>
         <item>لیست سیاه چین</item>
         <item>جهانی(GLOBAL)</item>
         <item>ایران</item>
     </string-array>
-
     <string-array name="vpn_bypass_lan">
         <item>پیش فرض کانفیگ</item>
         <item>دور زده شود</item>
         <item>دور زده نشود</item>
     </string-array>
-
+    <string name="menu_telegram_anonymous_keys">Telegram</string>
 </resources>

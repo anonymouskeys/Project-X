@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
     <string name="app_widget_name">開關</string>
     <string name="app_tile_name">開關</string>
@@ -8,8 +8,6 @@
     <string name="migration_success">資料遷移成功！</string>
     <string name="migration_fail">資料遷移失敗！</string>
     <string name="pull_down_to_refresh">請下拉刷新!</string>
-
-    <!-- Notifications -->
     <string name="notification_action_stop_v2ray">停止</string>
     <string name="toast_permission_denied">無法取得此權限</string>
     <string name="toast_permission_denied_notification">無法取得此通知權限</string>
@@ -18,8 +16,6 @@
     <string name="toast_services_stop">停止服務</string>
     <string name="toast_services_success">啟動服務成功</string>
     <string name="toast_services_failure">啟動服務失敗</string>
-
-    <!--ServerActivity-->
     <string name="title_server">設定檔</string>
     <string name="menu_item_add_config">新增設定</string>
     <string name="menu_item_save_config">儲存設定</string>
@@ -118,8 +114,6 @@
     <string name="server_lab_bandwidth_up">頻寬上行 (單位)</string>
     <string name="server_lab_xhttp_mode">XHTTP 模式</string>
     <string name="server_lab_xhttp_extra">XHTTP Extra 原始 JSON，格式： { XHTTPObject }</string>
-
-    <!-- PerAppProxyActivity -->
     <string name="title_user_asset_add_url">新增資產網址</string>
     <string name="msg_file_not_found">文件未找到</string>
     <string name="msg_remark_is_duplicate">備註已經存在</string>
@@ -132,9 +126,6 @@
     <string name="msg_downloading_content">正在下載內容</string>
     <string name="menu_item_export_proxy_app">匯出至剪貼簿</string>
     <string name="menu_item_import_proxy_app">從剪貼簿匯入</string>
-
-
-    <!-- Preferences -->
     <string name="title_settings">設定</string>
     <string name="title_advanced">進階</string>
     <string name="title_vpn_settings">VPN 設定</string>
@@ -142,7 +133,6 @@
     <string name="summary_pref_per_app_proxy">常規：勾選的 App 啟用 Proxy，未勾選的直接連線；\n繞行模式：勾選的 App 直接連線，未勾選的啟用 Proxy。\n可在選單中選擇自動選中需 Proxy 應用</string>
     <string name="title_pref_is_booted">開機時自動連線</string>
     <string name="summary_pref_is_booted">開機時自動連線選擇的伺服器，可能會不成功</string>
-
     <string name="title_mux_settings">Mux 設定</string>
     <string name="title_pref_mux_enabled">啟用 Mux 多路復用</string>
     <string name="summary_pref_mux_enabled">減低延時 但可能會斷流\nTCP，UDP 及 QUIC 流量處理方式下方可選</string>
@@ -154,59 +144,41 @@
         <item>多路復用</item>
         <item>原生</item>
     </string-array>
-
     <string name="title_pref_speed_enabled">啟用速度顯示</string>
     <string name="summary_pref_speed_enabled">在通知中顯示當前速度\n小圖示顯示流量的轉送狀況</string>
-
     <string name="title_pref_sniffing_enabled">啟用流量監聽</string>
     <string name="summary_pref_sniffing_enabled">從流量中監聽網域 (預設啟用)</string>
     <string name="title_pref_route_only_enabled">啟用 routeOnly</string>
     <string name="summary_pref_route_only_enabled">將嗅探得到的網域只用於路由，代理目標位址仍為 IP</string>
-
-
     <string name="title_pref_local_dns_enabled">啟用本機 DNS</string>
     <string name="summary_pref_local_dns_enabled">DNS 請求匯入 core 由 DNS 模塊處理 (建議啟用，如果需要轉送略過區域網路及中國大陸)</string>
-
     <string name="title_pref_fake_dns_enabled">啟用假 DNS</string>
     <string name="summary_pref_fake_dns_enabled">本機退回假解析結果 (減低延時，但個別應用可能無法使用)</string>
-
     <string name="title_pref_prefer_ipv6">IPv6 偏好</string>
     <string name="summary_pref_prefer_ipv6">App 優先使用 IPv6 位址連線伺服器，同时開啟 VPN 的 IPv6 路由</string>
-
     <string name="title_pref_remote_dns">遠端DNS (udp/tcp/https/quic)(可選)</string>
     <string name="summary_pref_remote_dns">DNS</string>
-
     <string name="title_pref_vpn_dns">VPN DNS (僅支援 IPv4/v6)</string>
     <string name="title_pref_vpn_bypass_lan">VPN是否繞過區域網</string>
-
     <string name="title_pref_dns_hosts">DNS hosts (格式: 網域:位址,…)</string>
     <string name="summary_pref_dns_hosts">domain:address,…</string>
-
     <string name="title_pref_delay_test_url">真連線延遲測試網址 (http/https)</string>
     <string name="summary_pref_delay_test_url">Url</string>
-
     <string name="title_pref_proxy_sharing_enabled">允許來自區域網路的連線</string>
     <string name="summary_pref_proxy_sharing_enabled">其他裝置可以使用 socks/http 協定透過您的 IP 位址連線到 Proxy，僅在受信任的網路中啟用以避免未經授權的連線</string>
     <string name="toast_warning_pref_proxysharing_short">允許來自區域網路的連線，請確保處於受信網路</string>
-
     <string name="title_pref_allow_insecure">跳過憑證驗證 (allowInsecure)</string>
     <string name="summary_pref_allow_insecure">傳輸層安全選 tls 時，預設跳過憑證驗證 (allowInsecure)</string>
-
     <string name="title_pref_socks_port">本地 Proxy 埠</string>
     <string name="summary_pref_socks_port">本地 Proxy 埠</string>
-
     <string name="title_pref_local_dns_port">本機 DNS 埠</string>
     <string name="summary_pref_local_dns_port">本機 DNS 埠</string>
-
     <string name="title_pref_confirm_remove">刪除設定檔確認</string>
     <string name="summary_pref_confirm_remove">刪除設定檔是否需要用戶二次確認</string>
-
     <string name="title_pref_start_scan_immediate">立即啟動掃碼</string>
     <string name="summary_pref_start_scan_immediate">啟動時立即打開相機掃描，否則可在工具欄選擇掃碼或選照片</string>
-
     <string name="title_pref_append_http_proxy">追加 HTTP 代理至 VPN</string>
     <string name="summary_pref_append_http_proxy">瀏覽器 / 一些支援的應用 將直接使用 HTTP 代理, 而不經過虛擬網卡設備 (Android 10+)</string>
-
     <string name="title_pref_feedback">意見回饋</string>
     <string name="summary_pref_feedback">前往 GitHub 回報錯誤</string>
     <string name="summary_pref_tg_group">加入 Telegram 群組</string>
@@ -220,21 +192,17 @@
     <string name="summary_configuration_backup">儲存位置: [%s], 卸載App或清除儲存後備份將被清除</string>
     <string name="title_configuration_restore">還原設定</string>
     <string name="title_configuration_share">分享設定</string>
-
-    <string name="title_pref_promotion">推廣</string>
+    <string name="title_pref_promotion">GitHub</string>
     <string name="summary_pref_promotion">一些推廣，輕觸以檢視 (捐贈可去除)</string>
-
     <string name="title_pref_auto_update_subscription">自動更新訂閱</string>
     <string name="summary_pref_auto_update_subscription">在後台以一定時間間隔自動更新您的訂閱。受設備影響，此功能不一定總是有效</string>
     <string name="title_pref_auto_update_interval">自動更新間隔（分鐘，最小值15）</string>
-
     <string name="title_core_loglevel">記錄層級</string>
     <string name="title_mode">模式</string>
     <string name="title_mode_help">輕觸以檢視說明</string>
     <string name="title_language">語言</string>
     <string name="title_ui_settings">介面顏色設定</string>
     <string name="title_pref_ui_mode_night">UI mode settings</string>
-
     <string name="title_logcat">Logcat</string>
     <string name="logcat_copy">複製</string>
     <string name="logcat_clear">清除</string>
@@ -260,14 +228,12 @@
     <string name="title_filter_config">過濾設定</string>
     <string name="filter_config_all">所有分組</string>
     <string name="title_del_duplicate_config_count">删除 %d 个重复配置</string>
-
     <string name="title_del_config_count">删除 %d 个配置</string>
     <string name="title_import_config_count">导入 %d 个配置</string>
     <string name="title_export_config_count">导出 %d 个配置</string>
     <string name="title_update_config_count">更新 %d 个配置</string>
     <string name="tasker_start_service">啟動服務</string>
     <string name="tasker_setting_confirm">確定</string>
-
     <string name="routing_settings_domain_strategy">網域策略</string>
     <string name="routing_settings_title">轉送設定</string>
     <string name="routing_settings_tips">以半形逗號「,」分隔,domain和ip二選一填寫</string>
@@ -281,7 +247,6 @@
     <string name="routing_settings_import_rulesets_from_qrcode">從 QRcode 匯入規則集</string>
     <string name="routing_settings_export_rulesets_to_clipboard">匯出規則集至剪貼簿</string>
     <string name="routing_settings_locked">鎖定中，匯入預設時不刪除此規則</string>
-
     <string name="connection_test_pending">"測試連線能力"</string>
     <string name="connection_test_testing">"測試中……"</string>
     <string name="connection_test_testing_count">測試 %d 个配置中…</string>
@@ -291,7 +256,6 @@
     <string name="connection_test_error_status_code">"錯誤碼：(#%d)"</string>
     <string name="connection_connected">"已連線，輕觸以檢查連線能力"</string>
     <string name="connection_not_connected">"未連線"</string>
-
     <string name="import_subscription_success">匯入訂閱成功</string>
     <string name="import_subscription_failure">匯入訂閱失敗</string>
     <string name="menu_item_add_asset">添加</string>
@@ -301,40 +265,34 @@
     <string name="title_pref_fragment_length">分片包長（最小-最大）</string>
     <string name="title_pref_fragment_interval">分片間隔（最小-最大）</string>
     <string name="title_pref_fragment_enabled">啟用分片（Fragment）</string>
-
     <string-array name="share_method">
         <item>QR Code</item>
         <item>匯出至剪貼簿</item>
         <item>匯出完整設定至剪貼簿</item>
     </string-array>
-
     <string-array name="share_sub_method">
         <item>QR Code</item>
         <item>匯出至剪貼簿</item>
     </string-array>
-
     <string-array name="mode_entries">
         <item>VPN</item>
         <item>僅 Proxy</item>
     </string-array>
-
     <string-array name="ui_mode_night">
         <item>跟隨系統</item>
         <item>淺色</item>
         <item>深色</item>
     </string-array>
-
     <string-array name="preset_rulesets">
         <item>繞過大陸(Whitelist)</item>
         <item>黑名單(Blacklist)</item>
         <item>全域(Global)</item>
         <item>伊朗(Iran)</item>
     </string-array>
-
     <string-array name="vpn_bypass_lan">
         <item>跟隨設定檔</item>
         <item>繞過</item>
         <item>不繞過</item>
     </string-array>
-
+    <string name="menu_telegram_anonymous_keys">Telegram</string>
 </resources>

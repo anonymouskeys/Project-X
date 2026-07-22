@@ -807,7 +807,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
 
             R.id.promotion -> {
-                Utils.openUri(this, "${Utils.decode(AppConfig.PromotionUrl)}?t=${System.currentTimeMillis()}")
+                Utils.openUri(this, AppConfig.GitHubUrl)}
+            R.id.nav_telegram_anonymous_keys -> Utils.openUri(this, AppConfig.TgChannelUrl)?t=${System.currentTimeMillis()}")
             }
 
             R.id.logcat -> {
